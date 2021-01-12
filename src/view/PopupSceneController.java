@@ -11,6 +11,8 @@ import java.util.Observer;
 
 public class PopupSceneController implements Observer {
 
+    private static final String DEFAULT_IP = "127.0.0.1";
+
     public ViewModel vm;
 
     @FXML public TextField port;
@@ -23,15 +25,18 @@ public class PopupSceneController implements Observer {
     }
 
     public void submitConnect(ActionEvent actionEvent) {
+        if (ip.getText().isEmpty()) ip.setText(DEFAULT_IP);
+        Stage popupWindow = (Stage) ip.getScene().getWindow();
+        popupWindow.close();
         vm.connectToFlightGear();
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if (o != vm) return;
-        if (arg.equals("Connected")) {
-            Stage stage = (Stage) ip.getScene().getWindow();
-            if (stage.isShowing()) stage.close();
-        }
+//        if (arg.equals("Connected")) {
+//            Stage stage = (Stage) ip.getScene().getWindow();
+//            if (stage.isShowing()) stage.close();
+//        }
     }
 }
