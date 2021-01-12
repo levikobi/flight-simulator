@@ -75,6 +75,7 @@ public class MainSceneController implements Observer {
 
             PopupSceneController psc = fxmlLoader.getController();
             psc.setViewModel(vm);
+            vm.addObserver(psc);
 
             if (!popupWindowStage.isShowing()) {
                 popupWindowStage.show();

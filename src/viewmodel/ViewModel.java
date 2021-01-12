@@ -21,6 +21,11 @@ public class ViewModel extends Observable implements Observer {
         port = new SimpleStringProperty();
     }
 
+    public void connectToFlightGear() {
+        setChanged();
+        notifyObservers("Connected");
+    }
+
     @Override
     public void update(Observable o, Object arg) {
 

@@ -14,6 +14,6 @@
         <Text layoutX="108.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Port" />
         <Text layoutX="115.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter IP" />
         <TextField fx:id="ip" layoutX="76.0" layoutY="120.0" prefHeight="31.0" prefWidth="131.0" promptText="127.0.0.1" />
-        <Button fx:id="popupWindowSubmitButton" layoutX="109.0" layoutY="163.0" mnemonicParsing="false" text="Submit" />
+        <Button onAction="#submitConnect" layoutX="109.0" layoutY="163.0" mnemonicParsing="false" text="Submit" />
     </children>
 </AnchorPane>
