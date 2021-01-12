@@ -7,7 +7,8 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.MainSceneController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="208.0"
+            prefWidth="282.0">
     <children>
         <TextField fx:id="port" layoutX="81.0" layoutY="44.0" prefHeight="11.0" prefWidth="121.0" promptText="5402 | 2030" />
         <Text layoutX="108.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Port" />

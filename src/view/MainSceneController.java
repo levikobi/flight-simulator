@@ -2,8 +2,13 @@ package view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import viewmodel.ViewModel;
 
 import java.io.File;
@@ -58,6 +63,21 @@ public class MainSceneController implements Observer {
             }
         }
         return grid;
+    }
+
+    public void openPopupScene(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("PopupScene.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage popupWindowStage = new Stage();
+            popupWindowStage.setTitle("Connect");
+            popupWindowStage.setScene(new Scene(root));
+            if (!popupWindowStage.isShowing()) {
+                popupWindowStage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
