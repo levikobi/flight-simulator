@@ -22,6 +22,8 @@ public class ViewModel extends Observable implements Observer {
     }
 
     public void connectToFlightGear() {
+        model.connect(ip.get(), Integer.parseInt(port.get()));
+
         setChanged();
         notifyObservers("Connected");
     }
