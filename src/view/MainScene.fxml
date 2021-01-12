@@ -13,7 +13,7 @@
             <HBox alignment="CENTER" spacing="5.0">
                 <children>
                     <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Connect" />
-                    <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Load Data" />
+                    <Button onAction="#loadDataFile" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Load Data" />
                     <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Calculate Path" />
                 </children>
                 <VBox.margin>
