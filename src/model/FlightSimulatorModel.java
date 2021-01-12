@@ -20,4 +20,9 @@ public class FlightSimulatorModel extends Observable implements Model {
         };
         interpreter.interpret(connectCommand);
     }
+
+    @Override
+    public void runAutopilotScript(String[] script) {
+        interpreter.interpret(script);
+    }
 }

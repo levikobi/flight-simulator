@@ -13,12 +13,14 @@ public class ViewModel extends Observable implements Observer {
 
     public StringProperty ip;
     public StringProperty port;
+    public StringProperty autopilotScript;
 
     public ViewModel(Model model) {
         this.model = model;
 
         ip = new SimpleStringProperty();
         port = new SimpleStringProperty();
+        autopilotScript = new SimpleStringProperty();
     }
 
     public void connectToFlightGear() {
@@ -26,6 +28,10 @@ public class ViewModel extends Observable implements Observer {
 
         setChanged();
         notifyObservers("Connected");
+    }
+
+    public void runAutopilotScript() {
+        model.runAutopilotScript(autopilotScript.get().split("\n"));
     }
 
     @Override

@@ -24,10 +24,12 @@ public class MainSceneController implements Observer {
     private ViewModel vm;
 
     @FXML public HeightMapDisplayer mapDisplayer;
-    @FXML public TextArea textarea;
+    @FXML public TextArea autopilotScript;
 
     public void setViewModel(ViewModel vm) {
         this.vm = vm;
+
+        vm.autopilotScript.bind(autopilotScript.textProperty());
     }
 
     public void loadDataFile(ActionEvent actionEvent) throws IOException {
@@ -49,7 +51,8 @@ public class MainSceneController implements Observer {
     public void loadAutopilotScript(ActionEvent actionEvent) throws IOException {
         Path path = Paths.get("scripts/autopilot.txt");
         String read = String.join("\n", Files.readAllLines(path));
-        textarea.setText(read);
+        autopilotScript.setText(read);
+        vm.runAutopilotScript();
     }
 
     private int[][] parseGrid(List<String> data) {

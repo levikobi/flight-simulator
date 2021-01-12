@@ -10,12 +10,12 @@ public class Interpreter {
         this.strings = StringsManager.getStrings();
     }
 
-    public double interpret(String[] data) {
-        double returnValue = 0;
-        for (String line : data) {
-            returnValue = lexer(line);
-        }
-        return returnValue;
+    public void interpret(String[] data) {
+        new Thread(() -> {
+            for (String line : data) {
+                lexer(line);
+            }
+        }).start();
     }
 
     private double lexer(String line) {
