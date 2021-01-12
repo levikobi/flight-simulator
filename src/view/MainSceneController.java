@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
+import viewmodel.ViewModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,11 +12,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class MainSceneController {
+public class MainSceneController implements Observer {
+
+    private ViewModel vm;
 
     @FXML public HeightMapDisplayer mapDisplayer;
     @FXML public TextArea textarea;
+
+    public void setViewModel(ViewModel vm) {
+        this.vm = vm;
+    }
 
     public void loadDataFile(ActionEvent actionEvent) throws IOException {
         Path path = openDataFilePath();
@@ -51,4 +60,8 @@ public class MainSceneController {
         return grid;
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }
