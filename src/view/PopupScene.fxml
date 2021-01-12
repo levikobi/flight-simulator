@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.MainSceneController"
+            fx:controller="view.PopupSceneController"
             prefHeight="208.0"
             prefWidth="282.0">
     <children>

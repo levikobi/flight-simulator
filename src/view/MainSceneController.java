@@ -72,6 +72,10 @@ public class MainSceneController implements Observer {
             Stage popupWindowStage = new Stage();
             popupWindowStage.setTitle("Connect");
             popupWindowStage.setScene(new Scene(root));
+
+            PopupSceneController psc = fxmlLoader.getController();
+            psc.setViewModel(vm);
+
             if (!popupWindowStage.isShowing()) {
                 popupWindowStage.show();
             }
