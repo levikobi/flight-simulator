@@ -1,6 +1,7 @@
 package model;
 
 import model.interpreter.interpreter.Interpreter;
+import model.interpreter.server.VariablesManager;
 
 import java.util.Observable;
 
@@ -19,6 +20,13 @@ public class FlightSimulatorModel extends Observable implements Model {
                 "connect " + ip + " " + port
         };
         interpreter.interpret(connectCommand);
+    }
+
+    @Override
+    public double[] getAirplanePosition() {
+        double lon = VariablesManager.map.get("airplane_lon").value;
+        double lat = VariablesManager.map.get("airplane_lat").value;
+        return new double[]{lon, lat};
     }
 
     @Override

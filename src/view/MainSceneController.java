@@ -1,5 +1,7 @@
 package view;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +25,8 @@ public class MainSceneController implements Observer {
 
     private ViewModel vm;
 
+    public StringProperty airplanePosition;
+
     @FXML public HeightMapDisplayer mapDisplayer;
     @FXML public TextArea autopilotScript;
 
@@ -30,6 +34,10 @@ public class MainSceneController implements Observer {
         this.vm = vm;
 
         vm.autopilotScript.bind(autopilotScript.textProperty());
+
+        airplanePosition = new SimpleStringProperty();
+        airplanePosition.bind(vm.airplanePosition);
+        airplanePosition.addListener(((observable, oldValue, newValue) -> System.out.println("Pos: " + airplanePosition.get())));
     }
 
     public void loadDataFile(ActionEvent actionEvent) throws IOException {

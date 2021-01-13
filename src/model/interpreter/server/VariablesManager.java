@@ -5,9 +5,8 @@ import java.util.Map;
 
 public class VariablesManager {
     public static final Map<String, VariableBinder> map = new LinkedHashMap<String, VariableBinder>(){{
-//        put("simX", new VariableBinder(0, "simX"));
-//        put("simY", new VariableBinder(0, "simY"));
-//        put("simZ", new VariableBinder(0, "simZ"));
+        put("airplane_lon", new VariableBinder(0, "/sim/current-view/viewer-lon-deg"));
+        put("airplane_lat", new VariableBinder(0, "/sim/current-view/viewer-lat-deg"));
 
         put("\"/instrumentation/airspeed-indicator/indicated-speed-kt\"", new VariableBinder(0, "/instrumentation/airspeed-indicator/indicated-speed-kt"));
         put("\"/instrumentation/altimeter/indicated-altitude-ft\"", new VariableBinder(0, "/instrumentation/altimeter/indicated-altitude-ft"));

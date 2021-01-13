@@ -16,10 +16,7 @@ public class ClientReceiver {
         String currLine;
         try {
             currLine = inFromClient.readLine();
-//            if (!prevLine.equals(currLine)) {
-                VariablesManager.updateVariables(currLine);
-//                prevLine = currLine;
-//            }
+            VariablesManager.updateVariables(currLine);
         } catch (IOException e) { e.printStackTrace(); }
 
     }
