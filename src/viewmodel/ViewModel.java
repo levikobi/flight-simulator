@@ -4,6 +4,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.Model;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.CompletableFuture;
@@ -46,6 +48,15 @@ public class ViewModel extends Observable implements Observer {
                 .supplyAsync(() -> model.getAirplanePosition())
                 .thenApply(position -> position[0] + "," + position[1])
                 .thenAccept(position -> airplanePosition.set(position));
+    }
+
+    public void setMapCoordinatesAndScale(List<String> data) {
+        double[] coordinates = Arrays
+                .stream(data.get(0).split(","))
+                .mapToDouble(Double::parseDouble)
+                .toArray();
+        double scale = Double.parseDouble(data.get(1).split(",")[0]);
+        model.setMapCoordinatesAndScale(coordinates, scale);
     }
 
     @Override

@@ -44,6 +44,7 @@ public class MainSceneController implements Observer {
         Path path = openDataFilePath();
         if (path == null) return;
         List<String> data = Files.readAllLines(path);
+        vm.setMapCoordinatesAndScale(data.subList(0, 2));
         mapDisplayer.setGrid(parseGrid(data.subList(2, data.size())));
     }
 
