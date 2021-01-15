@@ -2,19 +2,23 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.JoystickController">
-    <Group HBox.hgrow="NEVER">
+<AnchorPane prefHeight="321.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.JoystickController">
+    <Group layoutX="108.0" layoutY="67.0" translateX="60.0" translateY="60.0" HBox.hgrow="NEVER">
         <children>
-            <Circle fill="#282828" radius="38.0" stroke="BLACK">
+            <Circle fx:id="border" fill="#393939d1" layoutX="23.0" layoutY="14.0" radius="100.0" stroke="#616161" strokeType="INSIDE" />
+            <Circle fill="#282828" layoutX="23.0" layoutY="14.0" radius="38.0" stroke="BLACK">
                 <cursor>
                     <Cursor fx:constant="HAND" />
                 </cursor>
@@ -22,11 +26,84 @@
                     <InnerShadow choke="0.5" color="#000000cd" height="40.0" radius="19.5" width="40.0" />
                 </effect>
             </Circle>
-            <Circle fx:id="border" fill="#393939d1" layoutX="8.0" radius="100.0" stroke="#616161" strokeType="INSIDE" />
-            <Circle fx:id="Joystick" fill="#7c7c7c" layoutX="8.0" radius="50.0" stroke="BLACK" />
+            <Circle fx:id="thumbStick" fill="#7c7c7c" layoutX="23.0" layoutY="14.0" onMouseDragged="#handleDragThumbStick" onMousePressed="#handlePressThumbStick" onMouseReleased="#handleMouseReleased" radius="50.0" stroke="BLACK">
+                <cursor>
+                    <Cursor fx:constant="OPEN_HAND" />
+                </cursor>
+                <effect>
+                    <InnerShadow choke="0.5" color="#000000cd" height="40.0" radius="19.5" width="40.0">
+                        <input>
+                            <DropShadow height="30.0" radius="14.5" width="30.0" />
+                        </input>
+                    </InnerShadow>
+                </effect>
+            </Circle>
+            <Slider fx:id="rudder"
+                    onMouseDragged="#setRudder"
+                    blockIncrement="20.0" layoutX="-47.0" layoutY="133.0" max="1.0" min="-1.0"
+                    prefHeight="21.0" prefWidth="140.0"
+                    showTickLabels="true" showTickMarks="true">
+                <cursor>
+                    <Cursor fx:constant="OPEN_HAND" />
+                </cursor>
+            </Slider>
+            <Slider fx:id="throttle"
+                    onMouseDragged="#setThrottle"
+                    blockIncrement="20.0" layoutX="-129.0" layoutY="-56.0" max="1.0" orientation="VERTICAL"
+                    showTickLabels="true" showTickMarks="true">
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </padding>
+                <cursor>
+                    <Cursor fx:constant="OPEN_HAND" />
+                </cursor>
+            </Slider>
+            <Label layoutX="-174.0" layoutY="3.0" rotate="-90.0" text="Throttle" textFill="WHITE" underline="true">
+                <font>
+                    <Font name="Century Gothic" size="18.0" />
+                </font>
+            </Label>
+            <Label layoutX="-9.0" layoutY="156.0" text="Rudder" textFill="WHITE" underline="true">
+                <font>
+                    <Font name="Century Gothic" size="18.0" />
+                </font>
+            </Label>
+            <Label layoutX="-27.0" layoutY="-113.0" text="&lt;- Aileron -&gt;" textFill="WHITE">
+                <font>
+                    <Font name="Century Gothic" size="18.0" />
+                </font>
+                <padding>
+                    <Insets left="-5.0" top="-5.0" />
+                </padding>
+            </Label>
+            <Label layoutX="87.0" layoutY="3.0" rotate="90.0" text="&lt;- Elevator -&gt;" textFill="WHITE">
+                <font>
+                    <Font name="Century Gothic" size="18.0" />
+                </font>
+            </Label>
+            <VBox layoutX="-135.0" layoutY="108.0" prefHeight="71.0" prefWidth="58.0">
+                <children>
+                    <RadioButton fx:id="gears" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="18.0" prefWidth="26.0" textAlignment="CENTER" textFill="WHITE" underline="true">
+                        <VBox.margin>
+                            <Insets left="12.0" />
+                        </VBox.margin>
+                    </RadioButton>
+                    <Label text="Gears" textAlignment="RIGHT" textFill="WHITE" underline="true">
+                        <font>
+                            <Font size="17.0" />
+                        </font>
+                    </Label>
+                </children>
+                <padding>
+                    <Insets left="-1.0" top="-5.0" />
+                </padding>
+            </VBox>
         </children>
-        <VBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
-        </VBox.margin>
+        <HBox.margin>
+            <Insets left="-40.0" top="-30.0" />
+        </HBox.margin>
+        <effect>
+            <DropShadow />
+        </effect>
     </Group>
 </AnchorPane>

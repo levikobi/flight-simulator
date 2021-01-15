@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -31,19 +30,20 @@ public class MainSceneController implements Observer {
     @FXML public HeightMapDisplayer mapDisplayer;
     @FXML public TextArea autopilotScript;
 
-    @FXML Parent embeddedJoystick;
+    @FXML Parent joystick;
     @FXML JoystickController joystickController;
 
     public void setViewModel(ViewModel vm) {
         this.vm = vm;
+        joystickController.setViewModel(vm);
 
         vm.autopilotScript.bind(autopilotScript.textProperty());
 
         airplanePosition = new SimpleStringProperty();
         airplanePosition.bind(vm.airplanePosition);
-        airplanePosition.addListener(((observable, oldValue, newValue) -> {
-            mapDisplayer.setCharacterPosition(Arrays.stream(newValue.split(",")).mapToInt(Integer::parseInt).toArray());
-        }));
+//        airplanePosition.addListener(((observable, oldValue, newValue) -> {
+//            mapDisplayer.setCharacterPosition(Arrays.stream(newValue.split(",")).mapToInt(Integer::parseInt).toArray());
+//        }));
     }
 
     public void loadDataFile(ActionEvent actionEvent) throws IOException {

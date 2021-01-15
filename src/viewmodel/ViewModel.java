@@ -1,5 +1,7 @@
 package viewmodel;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.Model;
@@ -22,6 +24,9 @@ public class ViewModel extends Observable implements Observer {
     public StringProperty airplanePosition;
     public StringProperty autopilotScript;
 
+    public DoubleProperty rudder;
+    public DoubleProperty throttle;
+
     public ViewModel(Model model) {
         this.model = model;
 
@@ -29,6 +34,9 @@ public class ViewModel extends Observable implements Observer {
         port = new SimpleStringProperty();
         airplanePosition = new SimpleStringProperty();
         autopilotScript = new SimpleStringProperty();
+
+        rudder = new SimpleDoubleProperty();
+        throttle = new SimpleDoubleProperty();
     }
 
     public void connectToFlightGear() {
@@ -57,6 +65,14 @@ public class ViewModel extends Observable implements Observer {
                 .toArray();
         double scale = Double.parseDouble(data.get(1).split(",")[0]);
         model.setMapCoordinatesAndScale(coordinates, scale);
+    }
+
+    public void setRudder() {
+        model.setProperty("rudder", rudder.get());
+    }
+
+    public void setThrottle() {
+        model.setProperty("throttle", throttle.get());
     }
 
     @Override

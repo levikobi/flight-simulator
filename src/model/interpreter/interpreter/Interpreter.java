@@ -18,6 +18,12 @@ public class Interpreter {
         }).start();
     }
 
+    public void interpret(String data) {
+        new Thread(() -> {
+            lexer(data);
+        }).start();
+    }
+
     private double lexer(String line) {
         String[] lexemes = evaluating(line);
         for (String lexeme : lexemes) {

@@ -36,18 +36,25 @@ public class FlightSimulatorModel extends Observable implements Model {
     public int[] getAirplanePosition() {
         double lon1 = VariablesManager.map.get("airplane_lon").value;
         double lat1 = VariablesManager.map.get("airplane_lat").value;
-        System.out.println("LatLon: " + lat1 + " , " + lon1);
+//        System.out.println("LatLon: " + lat1 + " , " + lon1);
         double distance = Geometry.distance(lat, lat1, lon, lon1, 0, 0);
         double angle = Geometry.calcDegreeLatLon(lat1, lon1);
         int x = (int) (distance * Math.sin(angle * Math.PI / 180) * scale);
         int y = (int) (distance * Math.cos(angle * Math.PI / 180) * scale);
-        System.out.println("xy: " + x + " , " + y);
+//        System.out.println("xy: " + x + " , " + y);
         return new int[] {x, y};
     }
 
     @Override
     public void runAutopilotScript(String[] script) {
         interpreter.interpret(script);
+    }
+
+    @Override
+    public void setProperty(String property, double value) {
+        System.out.println(property);
+        System.out.println(value);
+        interpreter.interpret(property + " = " + value);
     }
 
     public static void main(String[] args) {

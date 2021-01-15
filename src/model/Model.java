@@ -5,4 +5,6 @@ public interface Model {
     void setMapCoordinatesAndScale(double[] coordinates, double scale);
     int[] getAirplanePosition();
     void runAutopilotScript(String[] script);
+
+    void setProperty(String property, double value);
 }
