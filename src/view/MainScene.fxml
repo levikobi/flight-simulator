@@ -1,11 +1,14 @@
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.canvas.Canvas?>
+<?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 <?import view.HeightMapDisplayer?>
 <HBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainSceneController">
 <children>
@@ -13,8 +16,8 @@
         <children>
             <HBox alignment="CENTER" spacing="5.0">
                 <children>
-                    <Button onAction="#openPopupScene" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Connect" />
-                    <Button onAction="#loadDataFile" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Load Data" />
+                    <Button mnemonicParsing="false" onAction="#openPopupScene" prefHeight="31.0" prefWidth="120.0" text="Connect" />
+                    <Button mnemonicParsing="false" onAction="#loadDataFile" prefHeight="31.0" prefWidth="120.0" text="Load Data" />
                     <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Calculate Path" />
                 </children>
                 <VBox.margin>
@@ -25,6 +28,7 @@
                     fx:id="mapDisplayer"
                     height="350.0"
                     width="400.0"
+                    characterImageName="./resources/airplane.png"
             >
                 <VBox.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -34,15 +38,47 @@
 
     <VBox prefHeight="400.0" prefWidth="350.0">
         <children>
-            <RadioButton onAction="#loadAutopilotScript" mnemonicParsing="false" prefHeight="21.0" prefWidth="138.0" text="Autopilot">
+            <RadioButton mnemonicParsing="false" onAction="#loadAutopilotScript" prefHeight="21.0" prefWidth="138.0" text="Autopilot">
                 <VBox.margin>
                     <Insets left="10.0" right="10.0" top="10.0" />
-                </VBox.margin></RadioButton>
+                </VBox.margin>
+            </RadioButton>
             <TextArea fx:id="autopilotScript" prefHeight="350.0" prefWidth="200.0">
                 <VBox.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
                 </VBox.margin></TextArea>
         </children>
     </VBox>
+
+
+
+    <VBox prefHeight="400.0" prefWidth="350.0">
+        <children>
+            <RadioButton mnemonicParsing="false" prefHeight="21.0" prefWidth="138.0" text="Manual">
+                <VBox.margin>
+                    <Insets left="10.0" right="10.0" top="10.0" />
+                </VBox.margin>
+            </RadioButton>
+            <Group HBox.hgrow="NEVER">
+                <children>
+                    <Circle fill="#282828" radius="38.0" stroke="BLACK">
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                        <effect>
+                            <InnerShadow choke="0.5" color="#000000cd" height="40.0" radius="19.5" width="40.0" />
+                        </effect>
+                    </Circle>
+                    <Circle fx:id="border" fill="#393939d1" layoutX="8.0" radius="100.0" stroke="#616161" strokeType="INSIDE" />
+                    <Circle fx:id="Joystick" fill="#7c7c7c" layoutX="8.0" radius="50.0" stroke="BLACK" />
+                </children>
+                <VBox.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
+                </VBox.margin>
+            </Group>
+        </children>
+
+    </VBox>
+
 </children>
 </HBox>

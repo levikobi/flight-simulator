@@ -37,7 +37,9 @@ public class MainSceneController implements Observer {
 
         airplanePosition = new SimpleStringProperty();
         airplanePosition.bind(vm.airplanePosition);
-        airplanePosition.addListener(((observable, oldValue, newValue) -> System.out.println("Pos: " + airplanePosition.get())));
+//        airplanePosition.addListener(((observable, oldValue, newValue) -> {
+//            mapDisplayer.setCharacterPosition(Arrays.stream(newValue.split(",")).mapToInt(Integer::parseInt).toArray());
+//        }));
     }
 
     public void loadDataFile(ActionEvent actionEvent) throws IOException {

@@ -36,10 +36,12 @@ public class FlightSimulatorModel extends Observable implements Model {
     public int[] getAirplanePosition() {
         double lon1 = VariablesManager.map.get("airplane_lon").value;
         double lat1 = VariablesManager.map.get("airplane_lat").value;
+        System.out.println("LatLon: " + lat1 + " , " + lon1);
         double distance = Geometry.distance(lat, lat1, lon, lon1, 0, 0);
-        double angle = 60;
+        double angle = Geometry.calcDegreeLatLon(lat1, lon1);
         int x = (int) (distance * Math.sin(angle * Math.PI / 180) * scale);
         int y = (int) (distance * Math.cos(angle * Math.PI / 180) * scale);
+        System.out.println("xy: " + x + " , " + y);
         return new int[] {x, y};
     }
 
@@ -50,7 +52,7 @@ public class FlightSimulatorModel extends Observable implements Model {
 
     public static void main(String[] args) {
         System.out.println(Geometry.distance(19.72137967, 21.443738, -155.0578122, -158.020959, 6, 426));
-        System.out.println(20 * Math.sin(30 * Math.PI / 180));
-//        System.out.println(Geometry.calcDegreeLatLon(-155.0578118, 19.72137997, -158.020959, 21.443738));
+//        System.out.println(20 * Math.sin(30 * Math.PI / 180));
+//        System.out.println(Geometry.calcDegreeLatLon(-158.020959, 21.443738, -155.0578118, 19.72137997));
     }
 }
