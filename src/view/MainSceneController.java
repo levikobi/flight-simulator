@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import view.components.HeightMapDisplayer;
+import view.components.JoystickController;
 import viewmodel.ViewModel;
 
 import java.io.File;
@@ -31,7 +33,8 @@ public class MainSceneController implements Observer {
     @FXML public TextArea autopilotScript;
 
     @FXML Parent joystick;
-    @FXML JoystickController joystickController;
+    @FXML
+    JoystickController joystickController;
 
     public void setViewModel(ViewModel vm) {
         this.vm = vm;

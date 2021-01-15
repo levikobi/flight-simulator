@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="321.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.JoystickController">
+<AnchorPane prefHeight="321.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.components.JoystickController">
     <Group layoutX="108.0" layoutY="67.0" translateX="60.0" translateY="60.0" HBox.hgrow="NEVER">
         <children>
             <Circle fx:id="border" fill="#393939d1" layoutX="23.0" layoutY="14.0" radius="100.0" stroke="#616161" strokeType="INSIDE" />
