@@ -52,8 +52,6 @@ public class HeightMapDisplayer extends Canvas {
             e.printStackTrace();
         }
 
-        System.out.println("Position: " + characterPosition[0] + " , " + characterPosition[1]);
-
         if (characterPosition != null && inBounds(characterPosition, m, n)) {
             graphicsContext.drawImage(characterImage,characterPosition[0], characterPosition[1], 15*cellWidth, 15*cellHeight);
         }

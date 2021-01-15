@@ -26,6 +26,10 @@ public class ViewModel extends Observable implements Observer {
 
     public DoubleProperty rudder;
     public DoubleProperty throttle;
+    public DoubleProperty aileron;
+    public DoubleProperty elevator;
+
+    private boolean flightGearConnected;
 
     public ViewModel(Model model) {
         this.model = model;
@@ -37,14 +41,14 @@ public class ViewModel extends Observable implements Observer {
 
         rudder = new SimpleDoubleProperty();
         throttle = new SimpleDoubleProperty();
+        aileron = new SimpleDoubleProperty();
+        elevator = new SimpleDoubleProperty();
     }
 
     public void connectToFlightGear() {
         model.connect(ip.get(), Integer.parseInt(port.get()));
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(this::updateAirplanePosition, 0, 250, TimeUnit.MILLISECONDS);
-        setChanged();
-        notifyObservers("Connected");
     }
 
     public void runAutopilotScript() {
@@ -75,8 +79,14 @@ public class ViewModel extends Observable implements Observer {
         model.setProperty("throttle", throttle.get());
     }
 
+    public void setAileronAndElevator() {
+        model.setProperty("aileron", aileron.get());
+        model.setProperty("elevator", elevator.get());
+    }
+
     @Override
     public void update(Observable o, Object arg) {
+        if (o != model) return;
 
     }
 }

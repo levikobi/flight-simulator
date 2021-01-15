@@ -26,7 +26,11 @@
                     <InnerShadow choke="0.5" color="#000000cd" height="40.0" radius="19.5" width="40.0" />
                 </effect>
             </Circle>
-            <Circle fx:id="thumbStick" fill="#7c7c7c" layoutX="23.0" layoutY="14.0" onMouseDragged="#handleDragThumbStick" onMousePressed="#handlePressThumbStick" onMouseReleased="#handleMouseReleased" radius="50.0" stroke="BLACK">
+            <Circle fx:id="thumbStick"
+                    onMouseDragged="#handleDragThumbStick"
+                    onMousePressed="#handlePressThumbStick"
+                    onMouseReleased="#handleMouseReleased"
+                    fill="#7c7c7c" layoutX="23.0" layoutY="14.0" radius="50.0" stroke="BLACK">
                 <cursor>
                     <Cursor fx:constant="OPEN_HAND" />
                 </cursor>
