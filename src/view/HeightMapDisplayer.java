@@ -60,7 +60,7 @@ public class HeightMapDisplayer extends Canvas {
     }
 
     private boolean inBounds(int[] position, int m, int n) {
-        return position[0] >= 0 && position[1] >= 0 && position[0] < m && position[1] < n;
+        return position[0] >= 0 && position[1] >= 0 && position[0] < n && position[1] < m;
     }
 
     public void setGrid(int[][] grid) {

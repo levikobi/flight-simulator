@@ -59,23 +59,24 @@
                     <Insets left="10.0" right="10.0" top="10.0" />
                 </VBox.margin>
             </RadioButton>
-            <Group HBox.hgrow="NEVER">
-                <children>
-                    <Circle fill="#282828" radius="38.0" stroke="BLACK">
-                        <cursor>
-                            <Cursor fx:constant="HAND" />
-                        </cursor>
-                        <effect>
-                            <InnerShadow choke="0.5" color="#000000cd" height="40.0" radius="19.5" width="40.0" />
-                        </effect>
-                    </Circle>
-                    <Circle fx:id="border" fill="#393939d1" layoutX="8.0" radius="100.0" stroke="#616161" strokeType="INSIDE" />
-                    <Circle fx:id="Joystick" fill="#7c7c7c" layoutX="8.0" radius="50.0" stroke="BLACK" />
-                </children>
-                <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
-                </VBox.margin>
-            </Group>
+            <fx:include fx:id="embeddedJoystick" source="Joystick.fxml" />
+<!--            <Group HBox.hgrow="NEVER">-->
+<!--                <children>-->
+<!--                    <Circle fill="#282828" radius="38.0" stroke="BLACK">-->
+<!--                        <cursor>-->
+<!--                            <Cursor fx:constant="HAND" />-->
+<!--                        </cursor>-->
+<!--                        <effect>-->
+<!--                            <InnerShadow choke="0.5" color="#000000cd" height="40.0" radius="19.5" width="40.0" />-->
+<!--                        </effect>-->
+<!--                    </Circle>-->
+<!--                    <Circle fx:id="border" fill="#393939d1" layoutX="8.0" radius="100.0" stroke="#616161" strokeType="INSIDE" />-->
+<!--                    <Circle fx:id="Joystick" fill="#7c7c7c" layoutX="8.0" radius="50.0" stroke="BLACK" />-->
+<!--                </children>-->
+<!--                <VBox.margin>-->
+<!--                    <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />-->
+<!--                </VBox.margin>-->
+<!--            </Group>-->
         </children>
 
     </VBox>

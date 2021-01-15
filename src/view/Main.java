@@ -2,13 +2,11 @@ package view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.FlightSimulatorModel;
 import viewmodel.ViewModel;
-
-import java.net.URL;
 
 public class Main extends Application {
 
@@ -18,16 +16,19 @@ public class Main extends Application {
         ViewModel vm = new ViewModel(model);
         model.addObserver(vm);
 
-        FXMLLoader fxl = new FXMLLoader();
-        URL resource = getClass().getResource("MainScene.fxml");
-        HBox hBox = fxl.load(resource.openStream());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScene.fxml"));
+        Parent root = (Parent) loader.load();
 
-        MainSceneController msc = fxl.getController();
+//        URL resource = getClass().getResource("MainScene.fxml");
+//        HBox hBox = fxl.load(resource.openStream());
+
+//        MainSceneController msc = fxl.getController();
+        MainSceneController msc = loader.getController();
         msc.setViewModel(vm);
         vm.addObserver(msc);
 
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(hBox));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
