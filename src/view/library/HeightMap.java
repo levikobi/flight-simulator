@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 import java.io.FileInputStream;
@@ -26,6 +27,11 @@ public class HeightMap extends Canvas {
 
     private double cellWidth;
     private double cellHeight;
+
+    private static final String LEFT = "Left";
+    private static final String RIGHT = "Right";
+    private static final String UP = "Up";
+    private static final String DOWN = "Down";
 
     public HeightMap() {
         characterImageName = new SimpleStringProperty();
@@ -51,6 +57,23 @@ public class HeightMap extends Canvas {
                 else graphicsContext.setFill(Paint.valueOf("eb7070"));
 
                 graphicsContext.fillRect(col*cellWidth, row*cellHeight, cellWidth, cellHeight);
+            }
+        }
+
+        if (path != null) {
+            characterPosition = new int[] {1, 4};
+            int y = characterPosition[0], x = characterPosition[1];
+            String[] directions = path.split(",");
+            for (String direction : directions) {
+                switch (direction) {
+                    case LEFT:  x--;    break;
+                    case RIGHT: x++;    break;
+                    case UP:    y--;    break;
+                    case DOWN:  y++;    break;
+                    default:            break;
+                }
+                graphicsContext.setFill(Color.WHITE);
+                graphicsContext.fillRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
             }
         }
 
