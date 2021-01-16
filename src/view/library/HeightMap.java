@@ -25,17 +25,20 @@ public class HeightMap extends Canvas {
     private Image characterImage;
     private Image destinationImage;
 
-    private double cellWidth;
-    private double cellHeight;
+    private double cellW;
+    private double cellH;
 
     private static final String LEFT = "Left";
     private static final String RIGHT = "Right";
     private static final String UP = "Up";
     private static final String DOWN = "Down";
 
+    private GraphicsContext graphicsContext;
+
     public HeightMap() {
         characterImageName = new SimpleStringProperty();
         destinationImageName = new SimpleStringProperty();
+        graphicsContext = getGraphicsContext2D();
     }
 
     public void redraw() {
@@ -43,12 +46,17 @@ public class HeightMap extends Canvas {
         int m = grid.length, n = grid[0].length;
 
         double totalWidth = getWidth(), totalHeight = getHeight();
-        cellWidth = totalWidth / n;
-        cellHeight = totalHeight / m;
+        cellW = totalWidth / n;
+        cellH = totalHeight / m;
 
-        GraphicsContext graphicsContext = getGraphicsContext2D();
         graphicsContext.clearRect(0, 0, totalWidth, totalHeight);
+        drawGrid(m, n);
+        drawPath();
+        drawCharacter(m, n);
+        drawDestination(m, n);
+    }
 
+    private void drawGrid(int m, int n) {
         for (int row = 0; row < m; row++) {
             for (int col = 0; col < n; col++) {
                 if (grid[row][col] > 500) graphicsContext.setFill(Paint.valueOf("64e291"));
@@ -56,51 +64,48 @@ public class HeightMap extends Canvas {
                 else if (grid[row][col] > 0) graphicsContext.setFill(Paint.valueOf("fec771"));
                 else graphicsContext.setFill(Paint.valueOf("eb7070"));
 
-                graphicsContext.fillRect(col*cellWidth, row*cellHeight, cellWidth, cellHeight);
+                graphicsContext.fillRect(col* cellW, row* cellH, cellW, cellH);
             }
         }
+    }
 
-        if (path != null) {
-            characterPosition = new int[] {1, 4};
-            int y = characterPosition[0], x = characterPosition[1];
-            String[] directions = path.split(",");
-            for (String direction : directions) {
-                switch (direction) {
-                    case LEFT:  x--;    break;
-                    case RIGHT: x++;    break;
-                    case UP:    y--;    break;
-                    case DOWN:  y++;    break;
-                    default:            break;
-                }
-                graphicsContext.setFill(Color.WHITE);
-                graphicsContext.fillRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+    private void drawPath() {
+        if (path == null) return;
+        characterPosition = new int[] {1, 4};
+        int y = characterPosition[0], x = characterPosition[1];
+        String[] directions = path.split(",");
+        for (String direction : directions) {
+            switch (direction) {
+                case LEFT:  x--;    break;
+                case RIGHT: x++;    break;
+                case UP:    y--;    break;
+                case DOWN:  y++;    break;
+                default:            break;
             }
+            graphicsContext.setFill(Color.WHITE);
+            graphicsContext.fillRect(x * cellW, y * cellH, cellW, cellH);
         }
+    }
 
-        characterImage = null;
+    private void drawCharacter(int m, int n) {
         try {
             characterImage = new Image(new FileInputStream(characterImageName.get()));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        } catch (FileNotFoundException e) { e.printStackTrace(); }
 
-        if (characterPosition != null && inBounds(characterPosition, m, n)) {
-            graphicsContext.drawImage(characterImage,characterPosition[0], characterPosition[1], 15*cellWidth, 15*cellHeight);
-        }
+        if (characterPosition == null || !inBounds(characterPosition, m, n)) return;
+        graphicsContext.drawImage(characterImage,characterPosition[0], characterPosition[1], 15* cellW, 15* cellH);
+    }
 
-        destinationImage = null;
+    private void drawDestination(int m, int n) {
         try {
             destinationImage = new Image(new FileInputStream(destinationImageName.get()));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        } catch (FileNotFoundException e) { e.printStackTrace(); }
 
-        if (destinationPosition != null && inBounds(destinationPosition, m, n)) {
-            graphicsContext.drawImage(destinationImage,
-                    cellWidth * (destinationPosition[1] - 5),
-                    cellHeight * (destinationPosition[0] - 5),
-                    10 * cellWidth, 10 * cellHeight);
-        }
+        if (destinationPosition == null || !inBounds(destinationPosition, m, n)) return;
+        graphicsContext.drawImage(destinationImage,
+                cellW * (destinationPosition[1] - 5),
+                cellH * (destinationPosition[0] - 5),
+                10 * cellW, 10 * cellH);
     }
 
     private boolean inBounds(int[] position, int m, int n) {
@@ -132,7 +137,7 @@ public class HeightMap extends Canvas {
 
     public void setDestinationPosition(MouseEvent mouseEvent) {
         double x = mouseEvent.getX(), y = mouseEvent.getY();
-        setDestinationPosition(new int[] {(int)(y/cellHeight), (int) (x/cellWidth)});
+        setDestinationPosition(new int[] {(int)(y/ cellH), (int) (x/ cellW)});
     }
 
     public String getDestinationImageName() {
