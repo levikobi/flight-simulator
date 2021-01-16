@@ -22,12 +22,14 @@ public class ViewModel extends Observable implements Observer {
     public StringProperty ip;
     public StringProperty port;
     public StringProperty airplanePosition;
+    public StringProperty destinationPosition;
     public StringProperty autopilotScript;
 
     public DoubleProperty rudder;
     public DoubleProperty throttle;
     public DoubleProperty aileron;
     public DoubleProperty elevator;
+
 
     private boolean flightGearConnected;
 

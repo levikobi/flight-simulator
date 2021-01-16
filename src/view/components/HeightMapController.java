@@ -20,13 +20,17 @@ public class HeightMapController {
     @FXML public HeightMap heightMap;
 
     public StringProperty airplanePosition;
-
+    public StringProperty destinationPosition;
 
     public void setViewModel(ViewModel vm) {
         this.vm = vm;
 
         airplanePosition = new SimpleStringProperty();
+        destinationPosition = new SimpleStringProperty();
+
         airplanePosition.bind(vm.airplanePosition);
+        vm.destinationPosition.bind(destinationPosition);
+
         airplanePosition.addListener(((observable, oldValue, newValue) -> {
             heightMap.setCharacterPosition(Arrays.stream(newValue.split(",")).mapToInt(Integer::parseInt).toArray());
         }));
@@ -52,5 +56,6 @@ public class HeightMapController {
 
     public void handleClickMapDisplayer(MouseEvent mouseEvent) {
         heightMap.setDestinationPosition(mouseEvent);
+        destinationPosition.set(heightMap.destinationPosition[0] + "," + heightMap.destinationPosition[1]);
     }
 }
