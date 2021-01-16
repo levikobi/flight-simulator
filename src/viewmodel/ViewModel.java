@@ -51,6 +51,11 @@ public class ViewModel extends Observable implements Observer {
         executor.scheduleAtFixedRate(this::updateAirplanePosition, 0, 250, TimeUnit.MILLISECONDS);
     }
 
+    public void connectToPathfinder() {
+        model.connect(ip.get(), Integer.parseInt(port.get()));
+
+    }
+
     public void runAutopilotScript() {
         model.runAutopilotScript(autopilotScript.get().split("\n"));
     }
