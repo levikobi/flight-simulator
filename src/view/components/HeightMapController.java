@@ -22,18 +22,13 @@ public class HeightMapController {
 
     @FXML public HeightMap heightMap;
 
-    public ListProperty<String> grid;
-    public StringProperty airplanePosition;
-    public StringProperty destinationPosition;
-    public StringProperty path;
+    public ListProperty<String> grid = new SimpleListProperty<>();
+    public StringProperty airplanePosition = new SimpleStringProperty();
+    public StringProperty destinationPosition = new SimpleStringProperty();
+    public StringProperty path = new SimpleStringProperty();
 
     public void setViewModel(ViewModel vm) {
         this.vm = vm;
-
-        grid = new SimpleListProperty<>();
-        airplanePosition = new SimpleStringProperty();
-        destinationPosition = new SimpleStringProperty();
-        path = new SimpleStringProperty();
 
         vm.grid.bind(grid);
         airplanePosition.bind(vm.airplanePosition);
@@ -44,10 +39,7 @@ public class HeightMapController {
             heightMap.setCharacterPosition(Arrays.stream(newValue.split(",")).mapToInt(Integer::parseInt).toArray());
         }));
 
-        path.addListener(((observable, oldValue, newValue) -> {
-            heightMap.setPath(path.get());
-            System.out.println("Updated path");
-        }));
+        path.addListener(observable -> heightMap.setPath(path.get()));
     }
 
     public void parseMapFile(Path path) throws IOException {
