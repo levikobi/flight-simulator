@@ -14,38 +14,24 @@ import java.util.concurrent.TimeUnit;
 
 public class ViewModel extends Observable implements Observer {
 
-    private Model model;
+    private final Model model;
 
-    public StringProperty ip;
-    public StringProperty port;
-    public StringProperty autopilotScript;
+    public StringProperty ip = new SimpleStringProperty();
+    public StringProperty port = new SimpleStringProperty();
+    public StringProperty autopilotScript = new SimpleStringProperty();
 
-    public DoubleProperty rudder;
-    public DoubleProperty throttle;
-    public DoubleProperty aileron;
-    public DoubleProperty elevator;
+    public DoubleProperty rudder = new SimpleDoubleProperty();
+    public DoubleProperty throttle = new SimpleDoubleProperty();
+    public DoubleProperty aileron = new SimpleDoubleProperty();
+    public DoubleProperty elevator = new SimpleDoubleProperty();
 
-    public ListProperty<String> grid;
-    public StringProperty airplanePosition;
-    public StringProperty destinationPosition;
-    public StringProperty path;
+    public ListProperty<String> grid = new SimpleListProperty<>();
+    public StringProperty airplanePosition = new SimpleStringProperty();
+    public StringProperty destinationPosition = new SimpleStringProperty();
+    public StringProperty path = new SimpleStringProperty();
 
     public ViewModel(Model model) {
         this.model = model;
-
-        ip = new SimpleStringProperty();
-        port = new SimpleStringProperty();
-        autopilotScript = new SimpleStringProperty();
-
-        grid = new SimpleListProperty<>();
-        airplanePosition = new SimpleStringProperty();
-        destinationPosition = new SimpleStringProperty();
-        path = new SimpleStringProperty();
-
-        rudder = new SimpleDoubleProperty();
-        throttle = new SimpleDoubleProperty();
-        aileron = new SimpleDoubleProperty();
-        elevator = new SimpleDoubleProperty();
     }
 
     public void connectToFlightGear() {
@@ -65,7 +51,7 @@ public class ViewModel extends Observable implements Observer {
 
     private void updateAirplanePosition() {
         CompletableFuture
-                .supplyAsync(() -> model.getAirplanePosition())
+                .supplyAsync(model::getAirplanePosition)
                 .thenApply(position -> position[0] + "," + position[1])
                 .thenAccept(position -> airplanePosition.set(position));
     }
