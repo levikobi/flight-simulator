@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import view.components.HeightMap;
@@ -105,8 +106,13 @@ public class MainSceneController implements Observer {
         }
     }
 
+    public void handleClickMapDisplayer(MouseEvent mouseEvent) {
+        heightMap.setDestinationPosition(mouseEvent);
+    }
+
     @Override
     public void update(Observable o, Object arg) {
 
     }
+
 }

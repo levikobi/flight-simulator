@@ -5,6 +5,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 
 import java.io.FileInputStream;
@@ -13,15 +14,21 @@ import java.io.FileNotFoundException;
 public class HeightMap extends Canvas {
 
     private StringProperty characterImageName;
+    private StringProperty destinationImageName;
 
-    private int[][] grid;
-    private int[] characterPosition;
+    public int[][] grid;
+    public int[] characterPosition;
+    public int[] destinationPosition;
 
     private Image characterImage;
+    private Image destinationImage;
+
+    private double cellWidth;
+    private double cellHeight;
 
     public HeightMap() {
         characterImageName = new SimpleStringProperty();
-
+        destinationImageName = new SimpleStringProperty();
     }
 
     public void redraw() {
@@ -29,7 +36,8 @@ public class HeightMap extends Canvas {
         int m = grid.length, n = grid[0].length;
 
         double totalWidth = getWidth(), totalHeight = getHeight();
-        double cellWidth = totalWidth / n, cellHeight = totalHeight / m;
+        cellWidth = totalWidth / n;
+        cellHeight = totalHeight / m;
 
         GraphicsContext graphicsContext = getGraphicsContext2D();
         graphicsContext.clearRect(0, 0, totalWidth, totalHeight);
@@ -55,10 +63,24 @@ public class HeightMap extends Canvas {
         if (characterPosition != null && inBounds(characterPosition, m, n)) {
             graphicsContext.drawImage(characterImage,characterPosition[0], characterPosition[1], 15*cellWidth, 15*cellHeight);
         }
+
+        destinationImage = null;
+        try {
+            destinationImage = new Image(new FileInputStream(destinationImageName.get()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (destinationPosition != null && inBounds(destinationPosition, m, n)) {
+            graphicsContext.drawImage(destinationImage,
+                    cellWidth * (destinationPosition[1] - 5),
+                    cellHeight * (destinationPosition[0] - 5),
+                    10 * cellWidth, 10 * cellHeight);
+        }
     }
 
     private boolean inBounds(int[] position, int m, int n) {
-        return position[0] >= 0 && position[1] >= 0 && position[0] < n && position[1] < m;
+        return position[0] >= 0 && position[1] >= 0 && position[0] < m && position[1] < n;
     }
 
     public void setGrid(int[][] grid) {
@@ -77,5 +99,23 @@ public class HeightMap extends Canvas {
 
     public void setCharacterImageName(String characterImageName) {
         this.characterImageName.set(characterImageName);
+    }
+
+    public void setDestinationPosition(int[] destinationPosition) {
+        this.destinationPosition = destinationPosition;
+        redraw();
+    }
+
+    public void setDestinationPosition(MouseEvent mouseEvent) {
+        double x = mouseEvent.getX(), y = mouseEvent.getY();
+        setDestinationPosition(new int[] {(int)(y/cellHeight), (int) (x/cellWidth)});
+    }
+
+    public String getDestinationImageName() {
+        return destinationImageName.get();
+    }
+
+    public void setDestinationImageName(String destinationImageName) {
+        this.destinationImageName.set(destinationImageName);
     }
 }
