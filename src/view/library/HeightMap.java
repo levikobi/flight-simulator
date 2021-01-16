@@ -19,6 +19,7 @@ public class HeightMap extends Canvas {
     public int[][] grid;
     public int[] characterPosition;
     public int[] destinationPosition;
+    public String path;
 
     private Image characterImage;
     private Image destinationImage;
@@ -117,5 +118,10 @@ public class HeightMap extends Canvas {
 
     public void setDestinationImageName(String destinationImageName) {
         this.destinationImageName.set(destinationImageName);
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+        redraw();
     }
 }

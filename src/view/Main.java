@@ -19,10 +19,6 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScene.fxml"));
         Parent root = (Parent) loader.load();
 
-//        URL resource = getClass().getResource("MainScene.fxml");
-//        HBox hBox = fxl.load(resource.openStream());
-
-//        MainSceneController msc = fxl.getController();
         MainSceneController msc = loader.getController();
         msc.setViewModel(vm);
         vm.addObserver(msc);

@@ -3,26 +3,34 @@ package model;
 import model.interpreter.interpreter.Interpreter;
 import model.interpreter.server.VariablesManager;
 
+import java.util.List;
 import java.util.Observable;
 
 public class FlightSimulatorModel extends Observable implements Model {
 
     private Interpreter interpreter;
+    private Pathfinder pathfinder;
     private double lat;
     private double lon;
     private double scale;
 
     public FlightSimulatorModel() {
         interpreter = new Interpreter();
+        pathfinder = new Pathfinder();
     }
 
     @Override
-    public void connect(String ip, int port) {
+    public void connectToFlightGear(String ip, int port) {
         String[] connectCommand = new String[]{
                 "openDataServer 5400 10",
                 "connect " + ip + " " + port
         };
         interpreter.interpret(connectCommand);
+    }
+
+    @Override
+    public void connectToPathfinder(String ip, int port) {
+        pathfinder.connect(ip, port);
     }
 
     @Override
@@ -47,6 +55,18 @@ public class FlightSimulatorModel extends Observable implements Model {
     @Override
     public void runAutopilotScript(String[] script) {
         interpreter.interpret(script);
+    }
+
+    @Override
+    public void calculatePath(List<String> grid, String start, String end) {
+        pathfinder.calculateShortestPath(grid, start, end);
+        setChanged();
+        notifyObservers();
+    }
+
+    @Override
+    public String getPath() {
+        return pathfinder.getShortestPath();
     }
 
     @Override

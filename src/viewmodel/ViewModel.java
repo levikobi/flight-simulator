@@ -1,9 +1,6 @@
 package viewmodel;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import model.Model;
 
 import java.util.Arrays;
@@ -21,8 +18,6 @@ public class ViewModel extends Observable implements Observer {
 
     public StringProperty ip;
     public StringProperty port;
-    public StringProperty airplanePosition;
-    public StringProperty destinationPosition;
     public StringProperty autopilotScript;
 
     public DoubleProperty rudder;
@@ -30,17 +25,22 @@ public class ViewModel extends Observable implements Observer {
     public DoubleProperty aileron;
     public DoubleProperty elevator;
 
-
-    private boolean flightGearConnected;
+    public ListProperty<String> grid;
+    public StringProperty airplanePosition;
+    public StringProperty destinationPosition;
+    public StringProperty path;
 
     public ViewModel(Model model) {
         this.model = model;
 
         ip = new SimpleStringProperty();
         port = new SimpleStringProperty();
+        autopilotScript = new SimpleStringProperty();
+
+        grid = new SimpleListProperty<>();
         airplanePosition = new SimpleStringProperty();
         destinationPosition = new SimpleStringProperty();
-        autopilotScript = new SimpleStringProperty();
+        path = new SimpleStringProperty();
 
         rudder = new SimpleDoubleProperty();
         throttle = new SimpleDoubleProperty();
@@ -49,14 +49,14 @@ public class ViewModel extends Observable implements Observer {
     }
 
     public void connectToFlightGear() {
-        model.connect(ip.get(), Integer.parseInt(port.get()));
+        model.connectToFlightGear(ip.get(), Integer.parseInt(port.get()));
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(this::updateAirplanePosition, 0, 250, TimeUnit.MILLISECONDS);
     }
 
     public void connectToPathfinder() {
-        model.connect(ip.get(), Integer.parseInt(port.get()));
-
+        model.connectToPathfinder(ip.get(), Integer.parseInt(port.get()));
+        model.calculatePath(grid.get(), "1,4", destinationPosition.get());
     }
 
     public void runAutopilotScript() {
@@ -95,6 +95,6 @@ public class ViewModel extends Observable implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o != model) return;
-
+        path.set(model.getPath());
     }
 }

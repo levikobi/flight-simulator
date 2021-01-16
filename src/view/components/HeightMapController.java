@@ -5,7 +5,6 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import view.library.HeightMap;
@@ -26,26 +25,35 @@ public class HeightMapController {
     public ListProperty<String> grid;
     public StringProperty airplanePosition;
     public StringProperty destinationPosition;
+    public StringProperty path;
 
     public void setViewModel(ViewModel vm) {
         this.vm = vm;
 
+        grid = new SimpleListProperty<>();
         airplanePosition = new SimpleStringProperty();
         destinationPosition = new SimpleStringProperty();
+        path = new SimpleStringProperty();
 
+        vm.grid.bind(grid);
         airplanePosition.bind(vm.airplanePosition);
         vm.destinationPosition.bind(destinationPosition);
+        path.bind(vm.path);
 
         airplanePosition.addListener(((observable, oldValue, newValue) -> {
             heightMap.setCharacterPosition(Arrays.stream(newValue.split(",")).mapToInt(Integer::parseInt).toArray());
+        }));
+
+        path.addListener(((observable, oldValue, newValue) -> {
+            heightMap.setPath(path.get());
+            System.out.println("Updated path");
         }));
     }
 
     public void parseMapFile(Path path) throws IOException {
         List<String> data = Files.readAllLines(path);
         vm.setMapCoordinatesAndScale(data.subList(0, 2));
-        ObservableList<String> observableList = FXCollections.observableArrayList(data.subList(2, data.size()));
-        grid = new SimpleListProperty<>(observableList);
+        grid.setValue(FXCollections.observableArrayList(data.subList(2, data.size())));
         heightMap.setGrid(parseGrid(data.subList(2, data.size())));
     }
 
