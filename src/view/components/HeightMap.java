@@ -10,7 +10,7 @@ import javafx.scene.paint.Paint;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class HeightMapDisplayer extends Canvas {
+public class HeightMap extends Canvas {
 
     private StringProperty characterImageName;
 
@@ -19,7 +19,7 @@ public class HeightMapDisplayer extends Canvas {
 
     private Image characterImage;
 
-    public HeightMapDisplayer() {
+    public HeightMap() {
         characterImageName = new SimpleStringProperty();
 
     }

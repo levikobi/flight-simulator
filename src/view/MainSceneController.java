@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import view.components.HeightMapDisplayer;
+import view.components.HeightMap;
 import view.components.JoystickController;
 import viewmodel.ViewModel;
 
@@ -30,12 +30,11 @@ public class MainSceneController implements Observer {
 
     public StringProperty airplanePosition;
 
-    @FXML public HeightMapDisplayer mapDisplayer;
+    @FXML public HeightMap heightMap;
     @FXML public TextArea autopilotScript;
 
-    @FXML Parent joystick;
-    @FXML
-    JoystickController joystickController;
+    @FXML public Parent joystick;
+    @FXML public JoystickController joystickController;
 
     public void setViewModel(ViewModel vm) {
         this.vm = vm;
@@ -46,7 +45,7 @@ public class MainSceneController implements Observer {
         airplanePosition = new SimpleStringProperty();
         airplanePosition.bind(vm.airplanePosition);
         airplanePosition.addListener(((observable, oldValue, newValue) -> {
-            mapDisplayer.setCharacterPosition(Arrays.stream(newValue.split(",")).mapToInt(Integer::parseInt).toArray());
+            heightMap.setCharacterPosition(Arrays.stream(newValue.split(",")).mapToInt(Integer::parseInt).toArray());
         }));
     }
 
@@ -55,7 +54,7 @@ public class MainSceneController implements Observer {
         if (path == null) return;
         List<String> data = Files.readAllLines(path);
         vm.setMapCoordinatesAndScale(data.subList(0, 2));
-        mapDisplayer.setGrid(parseGrid(data.subList(2, data.size())));
+        heightMap.setGrid(parseGrid(data.subList(2, data.size())));
     }
 
     private Path openDataFilePath() {

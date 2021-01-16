@@ -24,7 +24,7 @@ public final class Geometry {
 
         brng = Math.toDegrees(brng);
         brng = (brng + 360) % 360;
-//        brng = 360 - brng; // count degrees counter-clockwise - remove to make clockwise
+        brng = 360 - brng; // count degrees counter-clockwise - remove to make clockwise
 
         return brng;
     }

@@ -29,19 +29,18 @@ public class FlightSimulatorModel extends Observable implements Model {
     public void setMapCoordinatesAndScale(double[] coordinates, double scale) {
         lon = coordinates[0];
         lat = coordinates[1];
-        this.scale = scale;
+        this.scale = scale * 1000;
     }
 
     @Override
     public int[] getAirplanePosition() {
         double lon1 = VariablesManager.map.get("airplane_lon").value;
         double lat1 = VariablesManager.map.get("airplane_lat").value;
-//        System.out.println("LatLon: " + lat1 + " , " + lon1);
-        double distance = Geometry.distance(lat, lat1, lon, lon1, 0, 0);
+        double distance = Geometry.distance(lat, lat1, lon, lon1, 6, 426);
         double angle = Geometry.calcDegreeLatLon(lat1, lon1);
-        int x = (int) (distance * Math.sin(angle * Math.PI / 180) * scale);
-        int y = (int) (distance * Math.cos(angle * Math.PI / 180) * scale);
-//        System.out.println("xy: " + x + " , " + y);
+        int x = (int) (distance * Math.sin(Math.toRadians(angle)) / scale);
+        int y = (int) (distance * Math.cos(Math.toRadians(angle)) / scale);
+        System.out.println("xy: " + x + " , " + y);
         return new int[] {x, y};
     }
 
