@@ -1,7 +1,11 @@
 package view.components;
 
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import view.library.HeightMap;
@@ -19,6 +23,7 @@ public class HeightMapController {
 
     @FXML public HeightMap heightMap;
 
+    public ListProperty<String> grid;
     public StringProperty airplanePosition;
     public StringProperty destinationPosition;
 
@@ -39,6 +44,8 @@ public class HeightMapController {
     public void parseMapFile(Path path) throws IOException {
         List<String> data = Files.readAllLines(path);
         vm.setMapCoordinatesAndScale(data.subList(0, 2));
+        ObservableList<String> observableList = FXCollections.observableArrayList(data.subList(2, data.size()));
+        grid = new SimpleListProperty<>(observableList);
         heightMap.setGrid(parseGrid(data.subList(2, data.size())));
     }
 

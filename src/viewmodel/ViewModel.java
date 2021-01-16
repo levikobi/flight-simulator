@@ -39,6 +39,7 @@ public class ViewModel extends Observable implements Observer {
         ip = new SimpleStringProperty();
         port = new SimpleStringProperty();
         airplanePosition = new SimpleStringProperty();
+        destinationPosition = new SimpleStringProperty();
         autopilotScript = new SimpleStringProperty();
 
         rudder = new SimpleDoubleProperty();
