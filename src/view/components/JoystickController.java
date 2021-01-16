@@ -20,13 +20,11 @@ public class JoystickController {
     @FXML public Slider rudder;
     @FXML public Slider throttle;
 
-    public DoubleProperty aileron;
-    public DoubleProperty elevator;
+    public DoubleProperty aileron = new SimpleDoubleProperty();
+    public DoubleProperty elevator = new SimpleDoubleProperty();
 
     public void setViewModel(ViewModel vm) {
         this.vm = vm;
-        aileron = new SimpleDoubleProperty();
-        elevator = new SimpleDoubleProperty();
 
         vm.aileron.bind(aileron);
         vm.elevator.bind(elevator);
@@ -34,18 +32,12 @@ public class JoystickController {
         rudder.valueProperty().bindBidirectional(vm.rudder);
         throttle.valueProperty().bindBidirectional(vm.throttle);
 
-
         BORDER_RADIUS = border.radiusProperty().doubleValue();
         THUMBSTICK_RADIUS = thumbStick.radiusProperty().doubleValue();
     }
 
-    public void handlePressThumbStick(MouseEvent mouseEvent) {
-        System.out.println("Pressed");
-    }
-
     public void handleDragThumbStick(MouseEvent mouseEvent) {
-        double x = mouseEvent.getX();
-        double y = mouseEvent.getY();
+        double x = mouseEvent.getX(), y = mouseEvent.getY();
         double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
         if (2 * r > BORDER_RADIUS) {
             double deg = Math.abs(Math.toDegrees(y >= 0 ?
@@ -61,7 +53,6 @@ public class JoystickController {
     }
 
     public void handleMouseReleased(MouseEvent mouseEvent) {
-        System.out.println("Released");
         thumbStick.setCenterX(0);
         thumbStick.setCenterY(0);
     }
