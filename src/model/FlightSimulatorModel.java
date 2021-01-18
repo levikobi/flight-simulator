@@ -56,7 +56,7 @@ public class FlightSimulatorModel extends Observable implements Model {
     public int[] getAirplanePosition() {
         double lon1 = VariablesManager.map.get("airplane_lon").value;
         double lat1 = VariablesManager.map.get("airplane_lat").value;
-        double distance = Geometry.distance(lat, lat1, lon, lon1, 0, 0);
+        double distance = Geometry.distance(lat, lat1, 0, lon, lon1, 0);
         double angle = 180 - Geometry.bearing(lat, lon, lat1, lon1);
         int x = (int) (distance * Math.sin(Math.toRadians(angle)) / scale);
         int y = (int) (distance * Math.cos(Math.toRadians(angle)) / scale);
