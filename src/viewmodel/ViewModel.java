@@ -16,6 +16,8 @@ public class ViewModel extends Observable implements Observer {
 
     private final Model model;
 
+    private boolean connectedToPathfinder;
+
     public StringProperty ip = new SimpleStringProperty();
     public StringProperty port = new SimpleStringProperty();
     public StringProperty autopilotScript = new SimpleStringProperty();
@@ -41,11 +43,18 @@ public class ViewModel extends Observable implements Observer {
     }
 
     public void connectToPathfinder() {
+        if (ip.get() == null || port.get() == null) return;
         model.connectToPathfinder(ip.get(), Integer.parseInt(port.get()));
+        calculatePath();
+    }
+
+    public void calculatePath() {
+        if (!connectedToPathfinder) return;
         model.calculatePath(grid.get(), "1,4", destinationPosition.get());
     }
 
     public void runAutopilotScript() {
+        if (autopilotScript.get() == null) return;
         model.runAutopilotScript(autopilotScript.get().split("\n"));
     }
 
@@ -81,6 +90,10 @@ public class ViewModel extends Observable implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o != model) return;
-        path.set(model.getPath());
+        if (arg.equals("Connected to Pathfinder")) {
+            connectedToPathfinder = true;
+        } else if (arg.equals("Calculated path")) {
+            path.set(model.getPath());
+        }
     }
 }

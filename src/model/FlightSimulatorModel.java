@@ -2,6 +2,7 @@ package model;
 
 import model.interpreter.interpreter.Interpreter;
 import model.interpreter.server.VariablesManager;
+import utils.Geometry;
 
 import java.util.List;
 import java.util.Observable;
@@ -43,6 +44,8 @@ public class FlightSimulatorModel extends Observable implements Model {
     @Override
     public void connectToPathfinder(String ip, int port) {
         pathfinder.connect(ip, port);
+        setChanged();
+        notifyObservers("Connected to Pathfinder");
     }
 
     @Override
@@ -73,7 +76,7 @@ public class FlightSimulatorModel extends Observable implements Model {
     public void calculatePath(List<String> grid, String start, String end) {
         pathfinder.calculateShortestPath(grid, start, end);
         setChanged();
-        notifyObservers();
+        notifyObservers("Calculated path");
     }
 
     @Override
