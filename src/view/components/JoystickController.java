@@ -55,6 +55,9 @@ public class JoystickController {
     public void handleMouseReleased(MouseEvent mouseEvent) {
         thumbStick.setCenterX(0);
         thumbStick.setCenterY(0);
+        aileron.set(0);
+        elevator.set(0);
+        vm.setAileronAndElevator();
     }
 
     public void setRudder(MouseEvent mouseEvent) {

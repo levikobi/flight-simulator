@@ -28,7 +28,6 @@
             </Circle>
             <Circle fx:id="thumbStick"
                     onMouseDragged="#handleDragThumbStick"
-                    onMousePressed="#handlePressThumbStick"
                     onMouseReleased="#handleMouseReleased"
                     fill="#7c7c7c" layoutX="23.0" layoutY="14.0" radius="50.0" stroke="BLACK">
                 <cursor>

@@ -46,11 +46,11 @@ public class DataReaderServer {
         new Thread(() -> {
             while (!stop) {
                 clientReceiver.run();
-                try {
-                    Thread.sleep(delay);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(delay);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
             }
             clientReceiver.end();
             try {

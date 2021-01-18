@@ -15,6 +15,7 @@ public class AssignCommand extends AbstractCommand {
             VariableBinder binder = DefineVarCommand.programVariables.get(variableName);
             binder.value = ShuntingYard.calc(strings.next());
             if (!DefineVarCommand.programVariables.get(variableName).simulatorPath.equals("")) {
+//                System.out.println("set " + binder.simulatorPath + " " + binder.value);
                 ConnectCommand.out.println("set " + binder.simulatorPath + " " + binder.value);
             }
         }

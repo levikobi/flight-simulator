@@ -19,9 +19,9 @@ public class Interpreter {
     }
 
     public void interpret(String data) {
-        new Thread(() -> {
+//        new Thread(() -> {
             lexer(data);
-        }).start();
+//        }).start();
     }
 
     private double lexer(String line) {

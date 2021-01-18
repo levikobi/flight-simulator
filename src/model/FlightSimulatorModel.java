@@ -23,7 +23,19 @@ public class FlightSimulatorModel extends Observable implements Model {
     public void connectToFlightGear(String ip, int port) {
         String[] connectCommand = new String[]{
                 "openDataServer 5400 10",
-                "connect " + ip + " " + port
+                "connect " + ip + " " + port,
+                "var breaks = bind \"/controls/flight/speedbrake\"",
+                "var throttle = bind \"/controls/engines/current-engine/throttle\"",
+                "var heading = bind \"/instrumentation/heading-indicator/offset-deg\"",
+                "var airspeed = bind \"/instrumentation/airspeed-indicator/indicated-speed-kt\"",
+                "var roll = bind \"/instrumentation/attitude-indicator/indicated-roll-deg\"",
+                "var pitch = bind \"/instrumentation/attitude-indicator/internal-pitch-deg\"",
+                "var rudder = bind \"/controls/flight/rudder\"",
+                "var aileron = bind \"/controls/flight/aileron\"",
+                "var elevator = bind \"/controls/flight/elevator\"",
+                "var alt = bind \"/instrumentation/altimeter/indicated-altitude-ft\"",
+                "breaks = 0",
+                "throttle = 1"
         };
         interpreter.interpret(connectCommand);
     }
@@ -44,8 +56,8 @@ public class FlightSimulatorModel extends Observable implements Model {
     public int[] getAirplanePosition() {
         double lon1 = VariablesManager.map.get("airplane_lon").value;
         double lat1 = VariablesManager.map.get("airplane_lat").value;
-        double distance = Geometry.distance(lat, lat1, lon, lon1, 6, 426);
-        double angle = Geometry.calcDegreeLatLon(lat1, lon1);
+        double distance = Geometry.distance(lat, lat1, lon, lon1, 0, 0);
+        double angle = 180 - Geometry.bearing(lat, lon, lat1, lon1);
         int x = (int) (distance * Math.sin(Math.toRadians(angle)) / scale);
         int y = (int) (distance * Math.cos(Math.toRadians(angle)) / scale);
         System.out.println("xy: " + x + " , " + y);
@@ -71,14 +83,6 @@ public class FlightSimulatorModel extends Observable implements Model {
 
     @Override
     public void setProperty(String property, double value) {
-        System.out.println(property);
-        System.out.println(value);
         interpreter.interpret(property + " = " + value);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(Geometry.distance(19.72137967, 21.443738, -155.0578122, -158.020959, 6, 426));
-//        System.out.println(20 * Math.sin(30 * Math.PI / 180));
-//        System.out.println(Geometry.calcDegreeLatLon(-158.020959, 21.443738, -155.0578118, 19.72137997));
     }
 }
