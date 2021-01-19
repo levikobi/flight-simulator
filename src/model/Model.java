@@ -15,4 +15,9 @@ public interface Model {
 
     void calculatePath(List<String> grid, String start, String end);
     String getPath();
+
+    enum Message {
+        CONNECT_PATHFINDER_SUCCESS,
+        CALCULATE_PATH_SUCCESS
+    }
 }

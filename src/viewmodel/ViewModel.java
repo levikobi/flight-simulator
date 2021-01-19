@@ -89,11 +89,16 @@ public class ViewModel extends Observable implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (o != model) return;
-        if (arg.equals("Connected to Pathfinder")) {
-            connectedToPathfinder = true;
-        } else if (arg.equals("Calculated path")) {
-            path.set(model.getPath());
+        Model.Message message = (Model.Message) arg;
+        switch (message) {
+            case CONNECT_PATHFINDER_SUCCESS:
+                connectedToPathfinder = true;
+                break;
+            case CALCULATE_PATH_SUCCESS:
+                path.set(model.getPath());
+                break;
+
+            default: break;
         }
     }
 }

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="javafx-preloader" name="HeightMap">
+    <output-path>$PROJECT_DIR$/out/artifacts/HeightMap</output-path>
+    <root id="archive" name="HeightMap.jar">
+      <element id="file-copy" path="$PROJECT_DIR$/src/view/library/HeightMap.java" />
+    </root>
+  </artifact>
+</component>

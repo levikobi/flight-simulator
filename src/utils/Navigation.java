@@ -1,6 +1,6 @@
 package utils;
 
-public final class Geometry {
+public final class Navigation {
 
     public static final int EARTH_RADIUS = 6371;
 

@@ -32,6 +32,7 @@ public class Pathfinder extends Observable {
         outToSocket.println("end");
         outToSocket.println(start);
         outToSocket.println(target);
+        outToSocket.println(450);
         outToSocket.flush();
     }
 

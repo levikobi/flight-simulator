@@ -2,7 +2,7 @@ package model;
 
 import model.interpreter.interpreter.Interpreter;
 import model.interpreter.server.VariablesManager;
-import utils.Geometry;
+import utils.Navigation;
 
 import java.util.List;
 import java.util.Observable;
@@ -45,7 +45,7 @@ public class FlightSimulatorModel extends Observable implements Model {
     public void connectToPathfinder(String ip, int port) {
         pathfinder.connect(ip, port);
         setChanged();
-        notifyObservers("Connected to Pathfinder");
+        notifyObservers(Message.CONNECT_PATHFINDER_SUCCESS);
     }
 
     @Override
@@ -59,8 +59,8 @@ public class FlightSimulatorModel extends Observable implements Model {
     public int[] getAirplanePosition() {
         double lon1 = VariablesManager.map.get("airplane_lon").value;
         double lat1 = VariablesManager.map.get("airplane_lat").value;
-        double distance = Geometry.distance(lat, lat1, 0, lon, lon1, 0);
-        double angle = 180 - Geometry.bearing(lat, lon, lat1, lon1);
+        double distance = Navigation.distance(lat, lat1, 0, lon, lon1, 0);
+        double angle = 180 - Navigation.bearing(lat, lon, lat1, lon1);
         int x = (int) (distance * Math.sin(Math.toRadians(angle)) / scale);
         int y = (int) (distance * Math.cos(Math.toRadians(angle)) / scale);
         System.out.println("xy: " + x + " , " + y);
@@ -76,7 +76,7 @@ public class FlightSimulatorModel extends Observable implements Model {
     public void calculatePath(List<String> grid, String start, String end) {
         pathfinder.calculateShortestPath(grid, start, end);
         setChanged();
-        notifyObservers("Calculated path");
+        notifyObservers(Message.CALCULATE_PATH_SUCCESS);
     }
 
     @Override
