@@ -16,7 +16,7 @@ public class FlightSimulatorModel extends Observable implements Model {
     private double scale;
 
     public FlightSimulatorModel() {
-        interpreter = new Interpreter();
+        interpreter = Interpreter.getInstance();
         pathfinder = new Pathfinder();
     }
 
@@ -63,7 +63,7 @@ public class FlightSimulatorModel extends Observable implements Model {
         double angle = 180 - Navigation.bearing(lat, lon, lat1, lon1);
         int x = (int) (distance * Math.sin(Math.toRadians(angle)) / scale);
         int y = (int) (distance * Math.cos(Math.toRadians(angle)) / scale);
-        System.out.println("xy: " + x + " , " + y);
+//        System.out.println("xy: " + x + " , " + y);
         return new int[] {x, y};
     }
 
@@ -85,7 +85,12 @@ public class FlightSimulatorModel extends Observable implements Model {
     }
 
     @Override
+    public void switchFlyingSystems() {
+        interpreter.stop();
+    }
+
+    @Override
     public void setProperty(String property, double value) {
-        interpreter.interpret(property + " = " + value);
+        interpreter.interpret(new String[]{property + " = " + value});
     }
 }

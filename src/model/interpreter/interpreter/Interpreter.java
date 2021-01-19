@@ -1,27 +1,44 @@
 package model.interpreter.interpreter;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Interpreter {
+
     private final ExpressionsIterator expressions;
     private final StringsIterator strings;
+    private ExecutorService executor;
     private boolean newBlockScope;
+    public boolean isStopped;
 
-    public Interpreter() {
+    private static class InterpreterHolder {
+        public static final Interpreter interpreter = new Interpreter();
+    }
+
+    public static Interpreter getInstance() {
+        return InterpreterHolder.interpreter;
+    }
+
+    private Interpreter() {
         this.expressions = ExpressionsManager.getExpressions();
         this.strings = StringsManager.getStrings();
+        executor = Executors.newSingleThreadExecutor();
     }
 
     public void interpret(String[] data) {
-        new Thread(() -> {
-            for (String line : data) {
-                lexer(line);
-            }
-        }).start();
+        isStopped = false;
+        for (String line : data) {
+            executor.submit(() -> lexer(line));
+        }
     }
 
-    public void interpret(String data) {
-//        new Thread(() -> {
-            lexer(data);
-//        }).start();
+    public void stop() {
+        executor.shutdownNow();
+        executor = Executors.newSingleThreadExecutor();
+        expressions.clear();
+        strings.clear();
+        newBlockScope = false;
+        isStopped = true;
     }
 
     private double lexer(String line) {

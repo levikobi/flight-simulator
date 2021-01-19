@@ -56,6 +56,7 @@ public class MainSceneController implements Observer {
     }
 
     public void loadAutopilotScript(ActionEvent actionEvent) throws IOException {
+        vm.switchFlyingSystems();
         Path path = Paths.get("scripts/autopilot.txt");
         String read = String.join("\n", Files.readAllLines(path));
         autopilotScript.setText(read);
@@ -99,4 +100,7 @@ public class MainSceneController implements Observer {
 
     }
 
+    public void switchFlyingSystems(ActionEvent mouseEvent) {
+        vm.switchFlyingSystems();
+    }
 }

@@ -26,4 +26,8 @@ public class ExpressionsIterator {
     public boolean hasNext() {
         return !expressions.isEmpty();
     }
+
+    public void clear() {
+        expressions.clear();
+    }
 }

@@ -28,4 +28,6 @@ public class StringsIterator {
     public boolean hasNext() {
         return !strings.isEmpty();
     }
+
+    public void clear() { strings.clear(); }
 }

@@ -12,9 +12,7 @@ public class SleepCommand extends AbstractCommand {
         int sleepingTime = (int) ShuntingYard.calc(strings.next());
         try {
             sleep(sleepingTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        } catch (InterruptedException ignored) { }
         return 0;
     }
 }

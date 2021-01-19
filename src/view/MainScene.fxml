@@ -39,7 +39,7 @@
 
     <VBox prefHeight="400.0" prefWidth="350.0">
         <children>
-            <RadioButton mnemonicParsing="false" prefHeight="21.0" prefWidth="138.0" text="Manual">
+            <RadioButton onAction="#switchFlyingSystems" mnemonicParsing="false" prefHeight="21.0" prefWidth="138.0" text="Manual">
                 <VBox.margin>
                     <Insets left="10.0" right="10.0" top="10.0" />
                 </VBox.margin>

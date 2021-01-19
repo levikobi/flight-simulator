@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import static java.lang.Thread.sleep;
-
 public class ConnectCommand extends AbstractCommand {
     public static final String DISPLAY_NAME = "connect";
     public static PrintWriter out;
@@ -19,18 +17,16 @@ public class ConnectCommand extends AbstractCommand {
         String ip = strings.next();
         int port = (int) ShuntingYard.calc(strings.next());
 
-        // really bad code..
         do {
             try {
                 socket = new Socket(ip, port);
                 socket.setSoTimeout(1000);
                 connected = true;
-                out = new PrintWriter(socket.getOutputStream());
-//                System.out.print("Connected to " + ip + " on port " + port + ". ");
-//                System.out.println("Running on " + Thread.currentThread().getName() + " thread.");
+                out = new PrintWriter(socket.getOutputStream(), true);
+                System.out.println("Connected to FlightGear as command sender.");
             } catch (IOException ignored) { }
             try {
-                sleep(10);
+                wait(10);
             } catch (InterruptedException ignored) { }
         } while (!connected);
 
@@ -44,5 +40,13 @@ public class ConnectCommand extends AbstractCommand {
         try {
             socket.close();
         } catch (IOException ignored) { }
+    }
+
+    public static void main(String[] args) throws IOException {
+        Socket socket = new Socket("127.0.0.1", 5402);
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        out.println("set /controls/flight/rudder 1");
+        out.println("set /controls/flight/rudder -1");
+        out.println("set /controls/flight/rudder 1");
     }
 }

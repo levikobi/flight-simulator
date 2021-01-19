@@ -87,6 +87,10 @@ public class ViewModel extends Observable implements Observer {
         model.setProperty("elevator", elevator.get());
     }
 
+    public void switchFlyingSystems() {
+        model.switchFlyingSystems();
+    }
+
     @Override
     public void update(Observable o, Object arg) {
         Model.Message message = (Model.Message) arg;

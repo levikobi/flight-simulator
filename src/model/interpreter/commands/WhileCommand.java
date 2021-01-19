@@ -1,6 +1,7 @@
 package model.interpreter.commands;
 
 import model.interpreter.expressions.Expression;
+import model.interpreter.interpreter.Interpreter;
 
 public class WhileCommand extends ConditionParser {
     public static final String DISPLAY_NAME = "while";
@@ -8,7 +9,7 @@ public class WhileCommand extends ConditionParser {
     @Override
     public double execute() {
         initializeCondition();
-        while (condition) {
+        while (condition && !Interpreter.getInstance().isStopped) {
             updateStrings();
             expressionsHolder.forEach(Expression::calculate);
             validateCondition();
