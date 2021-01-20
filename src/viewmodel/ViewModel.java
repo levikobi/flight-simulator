@@ -50,7 +50,7 @@ public class ViewModel extends Observable implements Observer {
 
     public void calculatePath() {
         if (!connectedToPathfinder) return;
-        model.calculatePath(grid.get(), "1,4", destinationPosition.get());
+        model.calculatePath(grid.get(), airplanePosition.get(), destinationPosition.get());
     }
 
     public void runAutopilotScript() {

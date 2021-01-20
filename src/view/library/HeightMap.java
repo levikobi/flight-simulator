@@ -51,7 +51,7 @@ public class HeightMap extends Canvas {
 
         graphicsContext.clearRect(0, 0, totalWidth, totalHeight);
         drawGrid(m, n);
-        drawPath();
+        drawPath(m, n);
         drawCharacter(m, n);
         drawDestination(m, n);
     }
@@ -69,9 +69,8 @@ public class HeightMap extends Canvas {
         }
     }
 
-    private void drawPath() {
-        if (path == null) return;
-        characterPosition = new int[] {1, 4};
+    private void drawPath(int m, int n) {
+        if (path == null || !inBounds(characterPosition, m, n)) return;
         int y = characterPosition[0], x = characterPosition[1];
         String[] directions = path.split(",");
         for (String direction : directions) {
