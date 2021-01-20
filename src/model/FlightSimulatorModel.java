@@ -24,10 +24,9 @@ public class FlightSimulatorModel extends Observable implements Model {
         setChanged();
         try {
             pathfinder.connect(ip, port);
+            System.out.println("Connected to pathfinding server successfully.");
             notifyObservers(Message.CONNECT_PATHFINDER_SUCCESS);
-        } catch (IOException e) {
-            notifyObservers(Message.CONNECT_PATHFINDER_FAILURE);
-        }
+        } catch (IOException e) { notifyObservers(Message.CONNECT_PATHFINDER_FAILURE); }
     }
 
     @Override
@@ -47,9 +46,13 @@ public class FlightSimulatorModel extends Observable implements Model {
 
     @Override
     public void calculatePath(List<String> grid, String start, String end) {
-        pathfinder.calculateShortestPath(grid, start, end);
-        setChanged();
-        notifyObservers(Message.CALCULATE_PATH_SUCCESS);
+        new Thread(() -> {
+            setChanged();
+            try {
+                pathfinder.calculateShortestPath(grid, start, end);
+                notifyObservers(Message.CALCULATE_PATH_SUCCESS);
+            } catch (Exception e) { notifyObservers(Message.CALCULATE_PATH_FAILURE); }
+        }).start();
     }
 
     @Override

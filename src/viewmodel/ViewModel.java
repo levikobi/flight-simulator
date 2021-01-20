@@ -50,7 +50,7 @@ public class ViewModel extends Observable implements Observer {
 
     public void calculatePath() {
         if (!connectedToPathfinder) return;
-        model.calculatePath(grid.get(), airplanePosition.get(), destinationPosition.get());
+        model.calculatePath(grid.get(), "1,1", destinationPosition.get());
     }
 
     public void runAutopilotScript() {
@@ -103,8 +103,11 @@ public class ViewModel extends Observable implements Observer {
                 break;
             case CALCULATE_PATH_SUCCESS:
                 path.set(model.getPath());
+                System.out.println(path.get());
                 break;
-
+            case CALCULATE_PATH_FAILURE:
+                System.out.println("Could not find shortest path.");
+                break;
             default: break;
         }
     }
