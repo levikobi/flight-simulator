@@ -1,7 +1,7 @@
 package model.interpreter.commands;
 
 import model.interpreter.expressions.Expression;
-import model.interpreter.interpreter.Interpreter;
+import model.interpreter.Interpreter;
 
 public class WhileCommand extends ConditionParser {
     public static final String DISPLAY_NAME = "while";

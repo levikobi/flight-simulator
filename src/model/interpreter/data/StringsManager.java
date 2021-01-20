@@ -1,4 +1,4 @@
-package model.interpreter.interpreter;
+package model.interpreter.data;
 
 public class StringsManager {
     private static class StringsHolder {

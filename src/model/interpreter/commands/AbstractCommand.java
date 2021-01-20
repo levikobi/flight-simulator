@@ -1,6 +1,6 @@
 package model.interpreter.commands;
 
-import model.interpreter.interpreter.*;
+import model.interpreter.data.*;
 
 public abstract class AbstractCommand implements Command {
     protected ExpressionsIterator expressions;

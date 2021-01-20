@@ -1,4 +1,4 @@
-package model.interpreter.interpreter;
+package model.interpreter.data;
 
 import java.util.ArrayDeque;
 

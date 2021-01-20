@@ -1,4 +1,7 @@
-package model.interpreter.interpreter;
+package model.interpreter;
+
+import model.interpreter.data.*;
+import model.interpreter.server.VariablesManager;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -73,5 +76,9 @@ public class Interpreter {
         }
         if (!newBlockScope) return expressions.next().calculate();
         return 0;
+    }
+
+    public double getProperty(String property) {
+        return VariablesManager.map.get(property).value;
     }
 }

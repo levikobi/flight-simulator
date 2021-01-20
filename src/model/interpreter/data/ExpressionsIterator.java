@@ -1,4 +1,4 @@
-package model.interpreter.interpreter;
+package model.interpreter.data;
 
 import model.interpreter.expressions.Expression;
 
