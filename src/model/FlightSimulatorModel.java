@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Observable;
 
@@ -20,9 +21,13 @@ public class FlightSimulatorModel extends Observable implements Model {
 
     @Override
     public void connectToPathfinder(String ip, int port) {
-        pathfinder.connect(ip, port);
         setChanged();
-        notifyObservers(Message.CONNECT_PATHFINDER_SUCCESS);
+        try {
+            pathfinder.connect(ip, port);
+            notifyObservers(Message.CONNECT_PATHFINDER_SUCCESS);
+        } catch (IOException e) {
+            notifyObservers(Message.CONNECT_PATHFINDER_FAILURE);
+        }
     }
 
     @Override

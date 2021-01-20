@@ -98,6 +98,9 @@ public class ViewModel extends Observable implements Observer {
             case CONNECT_PATHFINDER_SUCCESS:
                 connectedToPathfinder = true;
                 break;
+            case CONNECT_PATHFINDER_FAILURE:
+                System.out.println("Could not connect to Pathfinding server.");
+                break;
             case CALCULATE_PATH_SUCCESS:
                 path.set(model.getPath());
                 break;

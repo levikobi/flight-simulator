@@ -13,15 +13,11 @@ public final class Pathfinder {
     private PrintWriter outToSocket;
     private BufferedReader inFromSocket;
 
-    public void connect(String ip, int port) {
-        try {
-            socket = new Socket(ip, port);
-            outToSocket = new PrintWriter(socket.getOutputStream());
-            inFromSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            System.out.println("Connected to pathfinding server successfully.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void connect(String ip, int port) throws IOException {
+        socket = new Socket(ip, port);
+        outToSocket = new PrintWriter(socket.getOutputStream());
+        inFromSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        System.out.println("Connected to pathfinding server successfully.");
     }
 
     public void calculateShortestPath(List<String> grid, String start, String target) {

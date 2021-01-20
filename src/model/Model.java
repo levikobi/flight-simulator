@@ -20,6 +20,7 @@ public interface Model {
 
     enum Message {
         CONNECT_PATHFINDER_SUCCESS,
+        CONNECT_PATHFINDER_FAILURE,
         CALCULATE_PATH_SUCCESS
     }
 }
