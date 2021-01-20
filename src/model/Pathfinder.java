@@ -6,13 +6,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
-import java.util.Observable;
 
-public class Pathfinder extends Observable {
+public final class Pathfinder {
 
-    protected Socket socket;
-    protected PrintWriter outToSocket;
-    protected BufferedReader inFromSocket;
+    private Socket socket;
+    private PrintWriter outToSocket;
+    private BufferedReader inFromSocket;
 
     public void connect(String ip, int port) {
         try {

@@ -23,7 +23,6 @@ public class ConnectCommand extends AbstractCommand {
                 socket.setSoTimeout(1000);
                 connected = true;
                 out = new PrintWriter(socket.getOutputStream(), true);
-                System.out.println("Connected to FlightGear as command sender.");
             } catch (IOException ignored) { }
             try {
                 wait(10);
