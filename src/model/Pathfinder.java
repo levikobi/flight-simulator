@@ -21,13 +21,14 @@ public final class Pathfinder {
         inFromSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 
-    public void calculateShortestPath(List<String> grid, String start, String target) throws IOException, NullPointerException {
+    public void calculateShortestPath(List<String> grid, String start, String target) throws Exception {
         if (grid == null || start == null || target == null) throw new NullPointerException();
         for (String line : grid) {
             outToSocket.println(line);
         }
         outToSocket.println("end");
         outToSocket.println(start);
+        System.out.println("Pathfinder " + start);
         outToSocket.println(target);
         outToSocket.println(450);
         outToSocket.flush();
@@ -37,21 +38,4 @@ public final class Pathfinder {
     public String getShortestPath() {
         return path;
     }
-
-//    public static void main(String[] args) throws Exception {
-//        Socket temp = new Socket("127.0.0.1", 5000);
-//        PrintWriter out  = new PrintWriter(temp.getOutputStream());
-//        BufferedReader in = new BufferedReader(new InputStreamReader(temp.getInputStream()));
-//
-//        out.println("1,1,1");
-//        out.println("1,1,1");
-//        out.println("1,1,1");
-//        out.println("end");
-//        out.println("0,0");
-//        out.println("2,2");
-//        out.println("500");
-//        out.flush();
-//        System.out.println(in.readLine());
-//        System.out.println("end");
-//    }
 }

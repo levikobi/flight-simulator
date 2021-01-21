@@ -37,6 +37,7 @@ public class ViewModel extends Observable implements Observer {
     }
 
     public void connectToFlightGear() {
+        if (ip.get() == null || port.get() == null) return;
         model.connectToFlightGear(ip.get(), Integer.parseInt(port.get()));
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(this::updateAirplanePosition, 0, 250, TimeUnit.MILLISECONDS);
@@ -45,12 +46,11 @@ public class ViewModel extends Observable implements Observer {
     public void connectToPathfinder() {
         if (ip.get() == null || port.get() == null) return;
         model.connectToPathfinder(ip.get(), Integer.parseInt(port.get()));
-        calculatePath();
     }
 
     public void calculatePath() {
-        if (!connectedToPathfinder) return;
-        model.calculatePath(grid.get(), "1,1", destinationPosition.get());
+        if (!connectedToPathfinder || grid == null || airplanePosition == null || destinationPosition == null) return;
+        model.calculatePath(grid.get(), airplanePosition.get(), destinationPosition.get());
     }
 
     public void runAutopilotScript() {
@@ -103,7 +103,6 @@ public class ViewModel extends Observable implements Observer {
                 break;
             case CALCULATE_PATH_SUCCESS:
                 path.set(model.getPath());
-                System.out.println(path.get());
                 break;
             case CALCULATE_PATH_FAILURE:
                 System.out.println("Could not find shortest path.");

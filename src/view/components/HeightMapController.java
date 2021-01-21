@@ -64,6 +64,6 @@ public class HeightMapController {
     public void handleClickMapDisplayer(MouseEvent mouseEvent) {
         heightMap.setDestinationPosition(mouseEvent);
         destinationPosition.set(heightMap.destinationPosition[0] + "," + heightMap.destinationPosition[1]);
-        vm.connectToPathfinder();
+        vm.calculatePath();
     }
 }

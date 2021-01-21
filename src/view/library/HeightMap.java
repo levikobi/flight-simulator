@@ -1,5 +1,6 @@
 package view.library;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
@@ -14,17 +15,19 @@ import java.io.FileNotFoundException;
 
 public class HeightMap extends Canvas {
 
-    private StringProperty characterImageName;
-    private StringProperty destinationImageName;
+    private final StringProperty characterImageName;
+    private final StringProperty destinationImageName;
+    private Image characterImage;
+    private Image destinationImage;
+
+    private final GraphicsContext graphicsContext;
 
     public int[][] grid;
     public int[] characterPosition;
     public int[] destinationPosition;
     public String path;
 
-    private Image characterImage;
-    private Image destinationImage;
-
+    private int m, n;
     private double cellW;
     private double cellH;
 
@@ -32,8 +35,6 @@ public class HeightMap extends Canvas {
     private static final String RIGHT = "Right";
     private static final String UP = "Up";
     private static final String DOWN = "Down";
-
-    private GraphicsContext graphicsContext;
 
     public HeightMap() {
         characterImageName = new SimpleStringProperty();
@@ -43,20 +44,23 @@ public class HeightMap extends Canvas {
 
     public void redraw() {
         if (grid == null) return;
-        int m = grid.length, n = grid[0].length;
+        m = grid.length;
+        n = grid[0].length;
 
         double totalWidth = getWidth(), totalHeight = getHeight();
         cellW = totalWidth / n;
         cellH = totalHeight / m;
 
-        graphicsContext.clearRect(0, 0, totalWidth, totalHeight);
-        drawGrid(m, n);
-        drawPath(m, n);
-        drawCharacter(m, n);
-        drawDestination(m, n);
+        Platform.runLater(() -> {
+            graphicsContext.clearRect(0, 0, totalWidth, totalHeight);
+            drawGrid();
+            drawPath();
+            drawCharacter();
+            drawDestination();
+        });
     }
 
-    private void drawGrid(int m, int n) {
+    private void drawGrid() {
         for (int row = 0; row < m; row++) {
             for (int col = 0; col < n; col++) {
                 if (grid[row][col] > 500) graphicsContext.setFill(Paint.valueOf("64e291"));
@@ -69,9 +73,10 @@ public class HeightMap extends Canvas {
         }
     }
 
-    private void drawPath(int m, int n) {
-        if (path == null || !inBounds(characterPosition, m, n)) return;
+    private void drawPath() {
+        if (path == null || !inBounds(characterPosition)) return;
         int y = characterPosition[0], x = characterPosition[1];
+        System.out.println("Start position: " + y+","+x);
         String[] directions = path.split(",");
         for (String direction : directions) {
             switch (direction) {
@@ -86,28 +91,28 @@ public class HeightMap extends Canvas {
         }
     }
 
-    private void drawCharacter(int m, int n) {
+    private void drawCharacter() {
         try {
             characterImage = new Image(new FileInputStream(characterImageName.get()));
         } catch (FileNotFoundException e) { e.printStackTrace(); }
 
-        if (characterPosition == null || !inBounds(characterPosition, m, n)) return;
+        if (characterPosition == null || !inBounds(characterPosition)) return;
         graphicsContext.drawImage(characterImage,characterPosition[0], characterPosition[1], 15* cellW, 15* cellH);
     }
 
-    private void drawDestination(int m, int n) {
+    private void drawDestination() {
         try {
             destinationImage = new Image(new FileInputStream(destinationImageName.get()));
         } catch (FileNotFoundException e) { e.printStackTrace(); }
 
-        if (destinationPosition == null || !inBounds(destinationPosition, m, n)) return;
+        if (destinationPosition == null || !inBounds(destinationPosition)) return;
         graphicsContext.drawImage(destinationImage,
                 cellW * (destinationPosition[1] - 5),
                 cellH * (destinationPosition[0] - 5),
                 10 * cellW, 10 * cellH);
     }
 
-    private boolean inBounds(int[] position, int m, int n) {
+    private boolean inBounds(int[] position) {
         return position[0] >= 0 && position[1] >= 0 && position[0] < m && position[1] < n;
     }
 
@@ -118,7 +123,8 @@ public class HeightMap extends Canvas {
 
     public void setCharacterPosition(int[] characterPosition) {
         this.characterPosition = characterPosition;
-        redraw();
+        System.out.println("Height map " + characterPosition[0] + "," + characterPosition[1]);
+        if (grid != null && inBounds(characterPosition)) redraw();
     }
 
     public String getCharacterImageName() {
@@ -137,6 +143,7 @@ public class HeightMap extends Canvas {
     public void setDestinationPosition(MouseEvent mouseEvent) {
         double x = mouseEvent.getX(), y = mouseEvent.getY();
         setDestinationPosition(new int[] {(int)(y/ cellH), (int) (x/ cellW)});
+        System.out.println("Destination position: " + y +","+x);
     }
 
     public String getDestinationImageName() {
