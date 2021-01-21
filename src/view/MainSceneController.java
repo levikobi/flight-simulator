@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import view.components.HeightMapController;
 import view.components.JoystickController;
 import viewmodel.ViewModel;
 
@@ -26,38 +25,46 @@ public class MainSceneController implements Observer {
 
     @FXML public TextArea autopilotScript;
 
-    @FXML public Parent heightMap;
-    @FXML public HeightMapController heightMapController;
+//    @FXML public Parent heightMap;
+//    @FXML public HeightMapController heightMapController;
 
     @FXML public Parent joystick;
     @FXML public JoystickController joystickController;
 
     public void setViewModel(ViewModel vm) {
         this.vm = vm;
-        heightMapController.setViewModel(vm);
+//        heightMapController.setViewModel(vm);
         joystickController.setViewModel(vm);
 
         vm.autopilotScript.bind(autopilotScript.textProperty());
     }
 
     public void loadDataFile(ActionEvent actionEvent) throws IOException {
-        Path path = openDataFilePath();
+        Path path = openFilePath("Select a map", "./resources","CSV Files","*.csv");
         if (path == null) return;
-        heightMapController.parseMapFile(path);
+//        heightMapController.parseMapFile(path);
     }
 
-    private Path openDataFilePath() {
+    private Path openFilePath(String title, String pathname, String description, String extensions) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select a map");
-        fileChooser.setInitialDirectory(new File("./resources"));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files","*.csv"));
+        fileChooser.setTitle(title);
+        fileChooser.setInitialDirectory(new File(pathname));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(description, extensions));
         File chosenFile = fileChooser.showOpenDialog(null);
         return chosenFile == null ? null : chosenFile.toPath();
     }
 
-    public void loadAutopilotScript(ActionEvent actionEvent) throws IOException {
+    public void runAutopilotScript(ActionEvent actionEvent) throws IOException {
         vm.switchFlyingSystems();
         Path path = Paths.get("scripts/autopilot.txt");
+        String read = String.join("\n", Files.readAllLines(path));
+        autopilotScript.setText(read);
+        vm.runAutopilotScript();
+    }
+
+    public void loadAutopilotScript(ActionEvent actionEvent) throws IOException {
+        Path path = openFilePath("Select autopilot script", "./scripts", "Txt files", "*.txt");
+        if (path == null) return;
         String read = String.join("\n", Files.readAllLines(path));
         autopilotScript.setText(read);
         vm.runAutopilotScript();
