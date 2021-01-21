@@ -48,7 +48,7 @@ public final class FlightGear {
         double angle = 180 - Navigation.bearing(lat, lon, lat1, lon1);
         int x = (int) (distance * Math.sin(Math.toRadians(angle)) / scale);
         int y = (int) (distance * Math.cos(Math.toRadians(angle)) / scale);
-        return new int[] {x, y};
+        return new int[] {y, x};
     }
 
     public void runAutopilotScript(String[] script) {

@@ -97,7 +97,10 @@ public class HeightMap extends Canvas {
         } catch (FileNotFoundException e) { e.printStackTrace(); }
 
         if (characterPosition == null || !inBounds(characterPosition)) return;
-        graphicsContext.drawImage(characterImage,characterPosition[0], characterPosition[1], 15* cellW, 15* cellH);
+        graphicsContext.drawImage(characterImage,
+                cellW * (characterPosition[1] - 7.5),
+                cellH * (characterPosition[0] - 7.5),
+                15 * cellW, 15 * cellH);
     }
 
     private void drawDestination() {
