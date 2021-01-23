@@ -26,14 +26,16 @@ public class JoystickController {
     public void setViewModel(ViewModel vm) {
         this.vm = vm;
 
-        vm.aileron.bind(aileron);
-        vm.elevator.bind(elevator);
-
+        vm.aileron.bindBidirectional(aileron);
+        vm.elevator.bindBidirectional(elevator);
         rudder.valueProperty().bindBidirectional(vm.rudder);
         throttle.valueProperty().bindBidirectional(vm.throttle);
 
         BORDER_RADIUS = border.radiusProperty().doubleValue();
         THUMBSTICK_RADIUS = thumbStick.radiusProperty().doubleValue();
+
+        aileron.addListener(((observable, oldValue, newValue) -> thumbStick.setCenterX(aileron.get() * THUMBSTICK_RADIUS)));
+        elevator.addListener((observable -> thumbStick.setCenterY(elevator.get() * THUMBSTICK_RADIUS)));
     }
 
     public void handleDragThumbStick(MouseEvent mouseEvent) {

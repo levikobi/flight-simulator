@@ -6,10 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import viewmodel.ViewModel;
 
-import java.util.Observable;
-import java.util.Observer;
-
-public class PopupSceneController implements Observer {
+public class PopupSceneController {
 
     private static final String DEFAULT_IP = "127.0.0.1";
 
@@ -33,10 +30,5 @@ public class PopupSceneController implements Observer {
         popupWindow.close();
         if (CONNECT_TO_FLIGHT_GEAR) vm.connectToFlightGear();
         if (CONNECT_TO_PATH_FINDER) vm.connectToPathfinder();
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-
     }
 }

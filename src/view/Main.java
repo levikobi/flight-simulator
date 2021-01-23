@@ -21,9 +21,8 @@ public class Main extends Application {
 
         MainSceneController msc = loader.getController();
         msc.setViewModel(vm);
-        vm.addObserver(msc);
 
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Flight Simulator");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

@@ -36,6 +36,7 @@ public class HeightMapController {
         path.bind(vm.path);
 
         airplanePosition.addListener(((observable, oldValue, newValue) -> {
+            vm.calculatePath();
             heightMap.setCharacterPosition(Arrays.stream(newValue.split(",")).mapToInt(Integer::parseInt).toArray());
         }));
 
@@ -46,6 +47,7 @@ public class HeightMapController {
         List<String> data = Files.readAllLines(path);
         vm.setMapCoordinatesAndScale(data.subList(0, 2));
         grid.setValue(FXCollections.observableArrayList(data.subList(2, data.size())));
+        heightMap.setHeights(getHeights(data.subList(2, data.size())));
         heightMap.setGrid(parseGrid(data.subList(2, data.size())));
     }
 
@@ -59,6 +61,18 @@ public class HeightMapController {
             }
         }
         return grid;
+    }
+
+    private int[] getHeights(List<String> data) {
+        int minHeight = Integer.MAX_VALUE, maxHeight = Integer.MIN_VALUE;
+        for (String line : data) {
+            String[] heights = line.split(",");
+            for (String height : heights) {
+                maxHeight = Math.max(maxHeight, Integer.parseInt(height));
+                minHeight = Math.min(minHeight, Integer.parseInt(height));
+            }
+        }
+        return new int[]{minHeight, maxHeight};
     }
 
     public void handleClickMapDisplayer(MouseEvent mouseEvent) {

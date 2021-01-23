@@ -8,7 +8,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -27,7 +26,7 @@ public class HeightMap extends Canvas {
     public int[] destinationPosition;
     public String path;
 
-    private int m, n;
+    private int m, n, minHeight, maxHeight;
     private double cellW;
     private double cellH;
 
@@ -63,20 +62,27 @@ public class HeightMap extends Canvas {
     private void drawGrid() {
         for (int row = 0; row < m; row++) {
             for (int col = 0; col < n; col++) {
-                if (grid[row][col] > 500) graphicsContext.setFill(Paint.valueOf("64e291"));
-                else if (grid[row][col] > 250) graphicsContext.setFill(Paint.valueOf("e6e56c"));
-                else if (grid[row][col] > 0) graphicsContext.setFill(Paint.valueOf("fec771"));
-                else graphicsContext.setFill(Paint.valueOf("eb7070"));
-
+                graphicsContext.setFill(getColorFromHeight(grid[row][col]));
                 graphicsContext.fillRect(col* cellW, row* cellH, cellW, cellH);
             }
         }
     }
 
+    private Color getColorFromHeight(double h){
+        int red = 200, green = 200, blue = 0;
+        double marg = (maxHeight - minHeight)/2 + minHeight;
+        double partDis = Math.abs((h - marg))/(maxHeight - marg);
+        if (h < marg) {
+            green *= (1 - partDis);
+        } else {
+            red *= (1 - partDis);
+        }
+        return Color.rgb(red, green, blue, 0.5);
+    }
+
     private void drawPath() {
         if (path == null || !inBounds(characterPosition)) return;
-        int y = characterPosition[0], x = characterPosition[1];
-        System.out.println("Start position: " + y+","+x);
+        int i = 0, y = characterPosition[0], x = characterPosition[1];
         String[] directions = path.split(",");
         for (String direction : directions) {
             switch (direction) {
@@ -86,6 +92,7 @@ public class HeightMap extends Canvas {
                 case DOWN:  y++;    break;
                 default:            break;
             }
+            if ((i=++i%10) < 3) continue;
             graphicsContext.setFill(Color.WHITE);
             graphicsContext.fillRect(x * cellW, y * cellH, cellW, cellH);
         }
@@ -110,9 +117,9 @@ public class HeightMap extends Canvas {
 
         if (destinationPosition == null || !inBounds(destinationPosition)) return;
         graphicsContext.drawImage(destinationImage,
-                cellW * (destinationPosition[1] - 5),
-                cellH * (destinationPosition[0] - 5),
-                10 * cellW, 10 * cellH);
+                cellW * (destinationPosition[1] - 4),
+                cellH * (destinationPosition[0] - 4),
+                8 * cellW, 8 * cellH);
     }
 
     private boolean inBounds(int[] position) {
@@ -124,9 +131,13 @@ public class HeightMap extends Canvas {
         redraw();
     }
 
+    public void setHeights(int[] heights) {
+        this.minHeight = heights[0];
+        this.maxHeight = heights[1];
+    }
+
     public void setCharacterPosition(int[] characterPosition) {
         this.characterPosition = characterPosition;
-        System.out.println("Height map " + characterPosition[0] + "," + characterPosition[1]);
         if (grid != null && inBounds(characterPosition)) redraw();
     }
 
@@ -146,7 +157,6 @@ public class HeightMap extends Canvas {
     public void setDestinationPosition(MouseEvent mouseEvent) {
         double x = mouseEvent.getX(), y = mouseEvent.getY();
         setDestinationPosition(new int[] {(int)(y/ cellH), (int) (x/ cellW)});
-        System.out.println("Destination position: " + y +","+x);
     }
 
     public String getDestinationImageName() {

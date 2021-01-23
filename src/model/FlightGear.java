@@ -19,18 +19,6 @@ public final class FlightGear {
         String[] connectCommand = new String[] {
                 "openDataServer 5400 10",
                 "connect " + ip + " " + port,
-                "var breaks = bind \"/controls/flight/speedbrake\"",
-                "var throttle = bind \"/controls/engines/current-engine/throttle\"",
-                "var heading = bind \"/instrumentation/heading-indicator/offset-deg\"",
-                "var airspeed = bind \"/instrumentation/airspeed-indicator/indicated-speed-kt\"",
-                "var roll = bind \"/instrumentation/attitude-indicator/indicated-roll-deg\"",
-                "var pitch = bind \"/instrumentation/attitude-indicator/internal-pitch-deg\"",
-                "var rudder = bind \"/controls/flight/rudder\"",
-                "var aileron = bind \"/controls/flight/aileron\"",
-                "var elevator = bind \"/controls/flight/elevator\"",
-                "var alt = bind \"/instrumentation/altimeter/indicated-altitude-ft\"",
-                "breaks = 0",
-                "throttle = 1"
         };
         interpreter.interpret(connectCommand);
     }
@@ -61,5 +49,18 @@ public final class FlightGear {
 
     public void setProperty(String property, double value) {
         interpreter.interpret(new String[]{property + " = " + value});
+    }
+
+    public double getProperty(String property) {
+        if (property.equals("rudder")) {
+            return interpreter.getProperty("\"/controls/flight/rudder\"");
+        } else if (property.equals("throttle")) {
+            return interpreter.getProperty("\"/controls/engines/current-engine/throttle\"");
+        } else if (property.equals("elevator")) {
+            return interpreter.getProperty("\"/controls/flight/elevator\"");
+        } else if (property.equals("aileron")) {
+            return interpreter.getProperty("\"/controls/flight/aileron\"");
+        }
+        return 0;
     }
 }

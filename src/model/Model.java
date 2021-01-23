@@ -7,6 +7,7 @@ public interface Model {
     void connectToPathfinder(String ip, int port);
 
     void setProperty(String property, double value);
+    double getProperty(String property);
 
     int[] getAirplanePosition();
     void setMapCoordinatesAndScale(double[] coordinates, double scale);

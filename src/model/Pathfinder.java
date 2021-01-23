@@ -28,7 +28,6 @@ public final class Pathfinder {
         }
         outToSocket.println("end");
         outToSocket.println(start);
-        System.out.println("Pathfinder " + start);
         outToSocket.println(target);
         outToSocket.println(450);
         outToSocket.flush();

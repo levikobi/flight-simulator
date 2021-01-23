@@ -69,4 +69,9 @@ public class FlightSimulatorModel extends Observable implements Model {
     public void setProperty(String property, double value) {
         flightGear.setProperty(property, value);
     }
+
+    @Override
+    public double getProperty(String property) {
+        return flightGear.getProperty(property);
+    }
 }

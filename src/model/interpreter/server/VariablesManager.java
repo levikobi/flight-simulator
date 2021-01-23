@@ -5,8 +5,10 @@ import java.util.Map;
 
 public class VariablesManager {
     public static final Map<String, VariableBinder> map = new LinkedHashMap<String, VariableBinder>(){{
+
         put("airplane_lon", new VariableBinder(0, "/sim/current-view/viewer-lon-deg"));
         put("airplane_lat", new VariableBinder(0, "/sim/current-view/viewer-lat-deg"));
+
 
         put("\"/instrumentation/airspeed-indicator/indicated-speed-kt\"", new VariableBinder(0, "/instrumentation/airspeed-indicator/indicated-speed-kt"));
         put("\"/instrumentation/altimeter/indicated-altitude-ft\"", new VariableBinder(0, "/instrumentation/altimeter/indicated-altitude-ft"));
@@ -33,8 +35,8 @@ public class VariablesManager {
         put("\"/engines/engine/rpm\"", new VariableBinder(0, "/engines/engine/rpm"));
 
 
-        put("\"/controls/flight/speedbrake\"", new VariableBinder(0, "/controls/flight/speedbrake"));
         put("\"/controls/engines/current-engine/throttle\"", new VariableBinder(0, "/controls/engines/current-engine/throttle"));
+        put("\"/controls/flight/speedbrake\"", new VariableBinder(0, "/controls/flight/speedbrake"));
         put("\"/instrumentation/heading-indicator/offset-deg\"", new VariableBinder(0, "/instrumentation/heading-indicator/offset-deg"));
     }};
 

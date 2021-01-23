@@ -40,12 +40,4 @@ public class ConnectCommand extends AbstractCommand {
             socket.close();
         } catch (IOException ignored) { }
     }
-
-    public static void main(String[] args) throws IOException {
-        Socket socket = new Socket("127.0.0.1", 5402);
-        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-        out.println("set /controls/flight/rudder 1");
-        out.println("set /controls/flight/rudder -1");
-        out.println("set /controls/flight/rudder 1");
-    }
 }

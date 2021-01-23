@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import view.components.HeightMapController;
 import view.components.JoystickController;
 import viewmodel.ViewModel;
 
@@ -16,24 +17,22 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Observable;
-import java.util.Observer;
 
-public class MainSceneController implements Observer {
+public class MainSceneController {
 
     private ViewModel vm;
 
     @FXML public TextArea autopilotScript;
 
-//    @FXML public Parent heightMap;
-//    @FXML public HeightMapController heightMapController;
+    @FXML public Parent heightMap;
+    @FXML public HeightMapController heightMapController;
 
     @FXML public Parent joystick;
     @FXML public JoystickController joystickController;
 
     public void setViewModel(ViewModel vm) {
         this.vm = vm;
-//        heightMapController.setViewModel(vm);
+        heightMapController.setViewModel(vm);
         joystickController.setViewModel(vm);
 
         vm.autopilotScript.bind(autopilotScript.textProperty());
@@ -42,7 +41,7 @@ public class MainSceneController implements Observer {
     public void loadDataFile(ActionEvent actionEvent) throws IOException {
         Path path = openFilePath("Select a map", "./resources","CSV Files","*.csv");
         if (path == null) return;
-//        heightMapController.parseMapFile(path);
+        heightMapController.parseMapFile(path);
     }
 
     private Path openFilePath(String title, String pathname, String description, String extensions) {
@@ -56,7 +55,7 @@ public class MainSceneController implements Observer {
 
     public void runAutopilotScript(ActionEvent actionEvent) throws IOException {
         vm.switchFlyingSystems();
-        Path path = Paths.get("scripts/autopilot.txt");
+        Path path = Paths.get("./scripts/autopilot.txt");
         String read = String.join("\n", Files.readAllLines(path));
         autopilotScript.setText(read);
         vm.runAutopilotScript();
@@ -92,7 +91,6 @@ public class MainSceneController implements Observer {
 
             PopupSceneController psc = fxmlLoader.getController();
             psc.setViewModel(vm);
-            vm.addObserver(psc);
 
             if (!popupWindowStage.isShowing()) {
                 popupWindowStage.show();
@@ -100,11 +98,6 @@ public class MainSceneController implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-
     }
 
     public void switchFlyingSystems(ActionEvent mouseEvent) {

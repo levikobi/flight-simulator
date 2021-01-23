@@ -54,7 +54,7 @@
                     <Font name="Century Gothic" size="18.0" />
                 </font>
             </Label>
-            <Label layoutX="-27.0" layoutY="-113.0" text="&lt;- Aileron -&gt;">
+            <Label layoutX="-27.0" layoutY="-113.0" text="← Aileron →">
                 <font>
                     <Font name="Century Gothic" size="18.0" />
                 </font>
@@ -62,7 +62,7 @@
                     <Insets left="-5.0" top="-5.0" />
                 </padding>
             </Label>
-            <Label layoutX="87.0" layoutY="3.0" rotate="90.0" text="&lt;- Elevator -&gt;">
+            <Label layoutX="87.0" layoutY="3.0" rotate="90.0" text="← Elevator →">
                 <font>
                     <Font name="Century Gothic" size="18.0" />
                 </font>

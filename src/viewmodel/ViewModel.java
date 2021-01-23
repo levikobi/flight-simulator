@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class ViewModel extends Observable implements Observer {
+public class ViewModel implements Observer {
 
     private final Model model;
 
@@ -63,6 +63,10 @@ public class ViewModel extends Observable implements Observer {
                 .supplyAsync(model::getAirplanePosition)
                 .thenApply(position -> position[0] + "," + position[1])
                 .thenAccept(position -> airplanePosition.set(position));
+        rudder.set(model.getProperty("rudder"));
+        throttle.set(model.getProperty("throttle"));
+        aileron.set(model.getProperty("aileron"));
+        elevator.set(model.getProperty("elevator"));
     }
 
     public void setMapCoordinatesAndScale(List<String> data) {

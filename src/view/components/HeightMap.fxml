@@ -9,7 +9,7 @@
             height="350.0"
             width="400.0"
             onMouseClicked="#handleClickMapDisplayer"
-            characterImageName="./resources/airplane.png"
+            characterImageName="./resources/airplane2.png"
             destinationImageName="./resources/multiply-32.png"
     >
         <VBox.margin>
